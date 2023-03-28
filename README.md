@@ -1,11 +1,11 @@
 # meteoPoo
-Bienvenus sur MétéoPoo !
-Ici vous suivrez mon évolution sur le langage "PHP orienté Objet".
-D'abord, la notion de "class" puis l'instanciation.
-Chaque class comprend une liste de proriétés spécifiées de leur "modificateur" selon le niveau de protection désiré.
-En plus des proriétés, nous listons les comportements au moyen de méthodes: des fonctions internes à la class.
-Ensuite, un constructeur.
-Suivent la sécurisation avec les accesseurs et les mutateurs: on untilise les fonctions "set" pour programmer, et la fonction "get" pour retourner.
-Enfin on créé les fonctions nécessaires aux comportements de la class.
+Welcome to MeteoPoo! <br>
+Here you will follow my evolution on the "Object-oriented PHP" language.
+First, the notion of "class" then instantiation.
+Each class includes a list of specified properties of their "modifier" depending on the level of protection desired.
+In addition to properties, we list behaviors through methods: functions internal to the class.
+Next, a constructor.
+This is followed by securing with accessors and mutators: we use the "set" functions to program, and the "get" function to return.
+Finally we create the functions necessary for the behavior of the class.
 
-Pour les instanciations, on utilise "new" pour créer un nouvel objet de la classe, et  on appelle la fonction de comportement attendu de l'objet.
+For instantiations, we use "new" to create a new object of the class, and call the object's expected behavior function.
