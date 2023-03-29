@@ -62,7 +62,7 @@ include "../accueil/titre.php";
                     $_SESSION['erreur'] = "";
                 }
                 ?>
-        <form action="traiterConnexion.php" method="POST" class="p-5 border rounded-3 bg-light mt-4 mb-5">
+        <form action="Connexion.php" method="POST" class="p-5 border rounded-3 bg-light mt-4 mb-5">
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" autocomplete="off">
                     <label for="email">E-mail</label>
