@@ -1,11 +1,10 @@
 <?php
-
 class Connexion{
+
     protected $email;
     protected $pass;
 
-
-public function __construct($email, $pass)
+public function __construct($pseudo, $email, $pass)
 {
 $this->setEmail ($email);
 $this->setPass ($pass);
@@ -17,9 +16,10 @@ public function setEmail($email)
   ){
     if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
         $this->email = $email;
-    }else{
-        throw new exception("Email incorrect");}
-  }
+    }
+  }else{
+    throw new exception("Email incorrect");
+}
 }
 
 public function setPass($pass)
@@ -33,12 +33,12 @@ public function setPass($pass)
 
 public function getEmail($email)
 {
-return $this->email;
+return $this->email;                                           var_dump($email);
 }
 
 public function getPass($pass)
 {
-return $this->pass;
+return $this->pass;                                            var_dump($pass);
 }
 
 public function seconnecter()
@@ -89,7 +89,8 @@ public function seconnecter()
                     "email" => $user["email"],
                     "dateInscrit" => $user["dateInscrit"],
                     "statut" => $user["statut"]
-                ];      
+                ];
+               
             }
         
                 if (isset($_SESSION['user']) && $user["statut"] == "Membre") {
@@ -103,18 +104,18 @@ public function seconnecter()
                     die('Vous devez remplir tous les champs');
                 }
             }
-         
+
         }else{
             header("Location: formConnexion.php");
             die(); 
         }
+
+    }
 }
 
-}
 
-$connect = new Connexion("email","pass");
-$connect->seconnecter();
-
+$nouvelInscrit = new Connexion("pseudo","email","pass" );
+$nouvelInscrit->seconnecter();
 
 
 
