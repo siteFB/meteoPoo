@@ -1,4 +1,3 @@
-# meteoPoo
 # Welcome to MeteoPoo! <br>
 You will follow here my evolution on the PHP "object-oriented programming" language. <br>
 First the notion of “class” then instantiation. <br>
