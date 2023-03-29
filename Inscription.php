@@ -1,43 +1,64 @@
 <?php
-require_once('Connexion.php');
+class Inscription{
 
-class Inscription extends Connexion{
     public $pseudo;
+    protected $email;
+    protected $pass;
 
 public function __construct($pseudo, $email, $pass)
 {
-parent::__construct($email, $pass);  
 $this->pseudo = $pseudo;
+$pseudo = trim($_POST["pseudo"]);
+$pseudo = strip_tags($_POST["pseudo"]); 
+$pseudo = stripslashes($_POST["pseudo"]);
 $pseudo = htmlentities($_POST["pseudo"]);
+$this->setEmail ($email);
+$this->setPass ($pass);
 }
 
-public function seconnecter()
+public function setEmail($email)
 {
-    if (isset($_POST) && !empty($_POST)){        
-        if(
-            isset($_POST["pseudo"]) && !empty($_POST["pseudo"]) 
-            && isset($_POST["email"]) && !empty($_POST["email"])           
-            && isset($_POST["pass"]) && !empty($_POST["pass"])
-        ){
-            $pseudo = htmlentities($_POST["pseudo"]);
-  
-            if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
-                die("L'adresse mail est invalide");
-            }  
-            
-            $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
- 
-            require_once "base/connexionBDD.php";
-            
-            $recupNouvelEntree = $db->prepare(" INSERT INTO `users`(`pseudo`,`email`,`pass`)
-            VALUES (:pseudo, :email, :pass)");  
+  if(isset($_POST["email"]) && !empty($_POST["email"])
+  ){
+    if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+        $this->email = $email;
+    }else{
+        throw new exception("Email incorrect");}
+  }else{
+    throw new exception("Email incorrect");
+}
+}
 
-            $recupNouvelEntree->bindValue(':pseudo',  $_POST['pseudo']);
-            $recupNouvelEntree->bindValue(':email', $_POST['email']);
-            $recupNouvelEntree->bindValue(':email', $_POST['pass']);
-            $recupNouvelEntree->execute();
-        
-            $id = $db->lastInsertId();
+public function setPass($pass)
+{
+    if(isset($_POST["pass"]) && !empty($_POST["pass"])
+    ){
+    $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
+    $this->pass = $pass;
+}
+}
+
+public function getEmail($email)
+{
+return $this->email;
+}
+
+public function getPass($pass)
+{
+return $this->pass;
+}
+
+public function sinscrire()
+{
+    if (isset($_POST) && !empty($_POST)){ 
+    require_once "base/connexionBDD.php";         
+    $recupNouvelEntree = $db->prepare(" INSERT INTO `users`(`pseudo`,`email`,`pass`)
+    VALUES (:pseudo, :email, :pass)");  
+    $recupNouvelEntree->bindValue(':pseudo', $_POST["pseudo"]);
+    $recupNouvelEntree->bindValue(':email', $_POST['email']);
+    $recupNouvelEntree->bindValue(':pass', $_POST['pass']);
+    $recupNouvelEntree->execute();
+    header("Location: formConnexion.php");
 
             $_SESSION["user"] = [
                         "id" => $id,
@@ -46,18 +67,18 @@ public function seconnecter()
                         "statut" => $user["statut"]
             ];            
             header("Location: formConnexion.php");
-              
-        }else{   //Champs vides au clic
-            $_SESSION['erreur'] = "Vous devez remplir tous les champs";
-            header("Location: ../accueil/index.php");
 
-        }
+}else{
+    $_SESSION['erreur'] = "Vous devez remplir tous les champs";
+    header("Location: index.php");
+}
+
     }
 }
-}
 
-$nouvelInscrit = new Inscription("pseudo","email","pass");
-$nouvelInscrit->seconnecter();
+
+$nouvelInscrit = new Inscription("pseudo","email","pass" );
+$nouvelInscrit->sinscrire();
 
 
 
