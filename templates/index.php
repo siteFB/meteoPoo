@@ -1,78 +1,24 @@
 <?php
-require_once('../meteoPoo/base/connexionBDD.php');
+require_once('../base/connexionBDD.php');
 
 $sql = 'SELECT * FROM `ephemeride`';
+
 $query = $db->prepare($sql);
+
 $query->execute();
+
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-require_once('../meteoPoo/base/deconnexionBDD.php');
+require_once('../base/deconnexionBDD.php');
 ?>
+<?php
+$titre = "Accueil";
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="boot.css">
-    <title>Météo version POO</title>
-</head>
-<body>
-<nav class="navbar navbar-dark bg-dark" aria-label="First navbar example">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">MÉTÉO 58</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation" onclick="myFunction()">
-            <span class="navbar-toggler-icon red"></span>
-        </button>
-        <div class="container" id="contenerNav">
-            <div class="d-flex justify-content-center">
-                <ul class="nav nav-pills">
-                    <!-------------------------- Gérer les accès de navigation selon la connexion ------------------------------->
-                    <?php if (!isset($_SESSION["user"])) : ?>
-                        <li class="nav-item"><a href="formConnexion.php" class="nav-link text-white">Se connecter</a></li>
-                        <li class="nav-item"><a href="#inscription" class="nav-link text-white">S'inscrire</a></li>
-                    <?php elseif (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Membre")) : ?>
-                        <li class="nav-item"><a href="../consulterMeteo.php" class="nav-link text-white">Éphéméride</a></li>
-                        <li class="nav-item"><a href="../espaceMembres/profilMembre.php" class="nav-link text-white">Profil</a></li>
-                        <li class="nav-item"><a href="../deconnexion.php" class="nav-link text-white">Se déconnecter</a></li>
-                    <?php elseif (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) : ?>
-                        <li class="nav-item"><a href="../consulterMeteo.php" class="nav-link text-white">Éphéméride</a></li>
-                        <li class="nav-item"><a href="profilAdmin.php" class="nav-link text-white">Profil</a></li>
-                        <li class="nav-item"><a href="../deconnexion.php" class="nav-link text-white">Se déconnecter</a></li>
-                    <?php endif; ?>
-                </ul>
-            </div>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarsExample01">
-            <ul class="navbar-nav me-auto mb-2">
-                <?php if (!isset($_SESSION["user"])) : ?>
-                    <li class="nav-item"><a href="formConnexion.php" class="nav-link text-white">Se connecter</a></li>
-                    <li class="nav-item"><a href="#inscription" class="nav-link text-white">S'inscrire</a></li>
-                <?php elseif (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Membre")) : ?>
-                    <li class="nav-item"><a href="../consulterMeteo.php" class="nav-link text-white">Éphéméride</a></li>
-                    <li class="nav-item"><a href="../espaceMembres/profilMembre.php" class="nav-link text-white">Profil</a></li>
-                    <li class="nav-item"><a href="../deconnexion.php" class="nav-link text-white">Se déconnecter</a></li>
-                <?php elseif (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) : ?>
-                    <li class="nav-item"><a href="../consulterMeteo.php" class="nav-link text-white">Éphéméride</a></li>
-                    <li class="nav-item"><a href="profilAdmin.php" class="nav-link text-white">Profil</a></li>
-                    <li class="nav-item"><a href="../deconnexion.php" class="nav-link text-white">Se déconnecter</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-------------------------- Titre ------------------------------->
-<div class="px-4 pt-2 my-5 text-center">
-    <img class="d-block mx-auto mb-4 w_" src="/imagenes/e23.png" alt="" width="80" height="auto">
-    <h1 class="display-3 fw-bold">MÉTÉO 58</h1>
-    <div class="col-lg-6 mx-auto">
-        <p class="lead mb-1">Rapprochez-vous de <a href="#">MÉTÉO 58</a>, lorem ipsum dolor sit amet.</p>
-    </div>
-</div>
-<!-------------------------- Séparateur ------------------------------->
-<div class="divider"></div>
+include "layout.php";
+include "header.php";
+?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
 <!-------------------------- Actus ------------------------------->
 <section>
     <h2 class="display-5 fw-bold text-center mt-5 mb-5">Éphéméride</h2>
@@ -98,6 +44,7 @@ require_once('../meteoPoo/base/deconnexionBDD.php');
     </div>
     <!-------------------------- Séparateur ------------------------------->
     <div class="divider"></div>
+
     <!-------------------------- Inscription ------------------------------->
     <div class="container col-xl-10 col-xxl-8 pt-2 my-3">
         <div class="row align-items-center g-5 py-3">
@@ -121,10 +68,10 @@ require_once('../meteoPoo/base/deconnexionBDD.php');
                 </div>
             </section>
             <div class="col-10 mx-auto col-lg-5">
-                <form action="Inscription.php" method="POST" class="p-5 border rounded-3 bg-light" id="sinscrire">
+                <form action="../traitements/connection/traiterInscription.php" method="POST" class="p-5 border rounded-3 bg-light" id="sinscrire">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="pseudo" id="pseudo" pattern="[a-z]{2,25}">
-                        <label for="pseudo">Pseudo ( <i>Exemple_58</i> )</label>
+                        <label for="pseudo">Pseudo (format Exemple_58)</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" name="email" id="email">
@@ -143,6 +90,7 @@ require_once('../meteoPoo/base/deconnexionBDD.php');
 </section>
 <!-------------------------- Séparateur ------------------------------->
 <div class="divider"></div>
+
 <!-------------------------- Contacts ------------------------------->
 <section>
     <?php
@@ -154,7 +102,7 @@ require_once('../meteoPoo/base/deconnexionBDD.php');
 
     <div class="container bg-light col-xl-10 col-xxl-12 pt-2">
         <div class="row align-items-center g-5 py-3">
-    <!------------ Message ----------->
+    <!------------ Fake message ----------->
             <div class="col-10 mx-auto col-lg-5 pt-4 mt-4 mb-4">
                 <form action="../messagerie/envoi.php" method="POST" class="p-5 pb-1 mt-3 border rounded-3 bg-white" id="sinscrire">
                 <h4 class="display-6 pb-3 text-center">Laissez un message</h4>
@@ -179,7 +127,7 @@ require_once('../meteoPoo/base/deconnexionBDD.php');
 
                 </form>
             </div>
-    <!------------ Contacts ----------->
+    <!------------ Coordonnées ----------->
             <div class="container col-xl-4 col-xxl-6 pt-2">
                 <div>
                     <div class="col-10 mx-auto col-lg-5 pt-4 mt-4 mb-4">
@@ -210,21 +158,7 @@ require_once('../meteoPoo/base/deconnexionBDD.php');
         </div>
     </div>
 </section>
-<footer class="bg-dark p-4 text-white text-center">
-        <h2>Nos partenaires</h2>
-        <hr>
-        <nav class="nav d-flex justify-content-between" aria-label="Fith navbar example">
-            <a class="p-2 link-secondary" href="https://www.hellowork.com/fr-fr/">Météo France</a>
-            <a class="p-2 link-secondary" href="https://www.pole-emploi.fr/accueil/">Météo+</a>
-            <a class="p-2 link-secondary" href="https://fr.indeed.com/">France Météo</a>
-            <a class="p-2 link-secondary"
-                href="https://openclassrooms.com/fr/paths/500-developpeur-dapplication-php-symfony">OpenClassRoom</a>
-            &copy;MÉTÉO 58
-        </nav>
-    </footer>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    <script src="boot.js"></script>
 
-</body>
-</html>
+<?php
+include "footer.php";
+?>
