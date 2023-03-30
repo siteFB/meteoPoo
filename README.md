@@ -8,3 +8,5 @@ This is followed by encapsulation with accessors and setters: we use the "set" f
 Finally we create the methods necessary for the behavior of the class. <br>
 
 For instantiations, we use the "new" keyword to create a new object of the class. All that remains is to call the method of the expected behavior of the object.
+
+Ok, I need to reorganizing my code to properly prepare it for factoring with functions... Laborious work because of the many redirections... :sweat_drops:
