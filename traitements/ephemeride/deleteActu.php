@@ -22,7 +22,7 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
 
     if(!$produit){
         $_SESSION['erreur'] = "Cet id n'existe pas";
-        header('Location: /templates/espaceAdminister/gererActu.php');
+        header('Location: /templates/ephemerideTemplate/gererActu.php');
         die();
     }
 
@@ -35,11 +35,11 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
     $query->execute();
 
     $_SESSION['message'] = "Éphéméride supprimée";
-    header('Location: /templates/espaceAdminister/gererActu.php');
+    header('Location: /templates/ephemerideTemplate/gererActu.php');
 
 }else{
     $_SESSION['erreur'] = "URL invalide";
-    header('Location: /templates/espaceAdminister/gererActu.php');
+    header('Location: /templates/ephemerideTemplate/gererActu.php');
 }
 ?>
 

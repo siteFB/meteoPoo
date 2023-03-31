@@ -24,7 +24,7 @@ echo '</pre>';
 
 if(!$resultat){
     $_SESSION['erreur'] = "Cet id n'existe pas";
-    header('Location: ../../traitements/boitemail/recusAdmin.php');
+    header('Location: ../../templates/boitemailTemplate/msgRecusAdmin.php');
     die();
 }
 
@@ -37,11 +37,11 @@ $requete->bindValue(':id', $id, PDO::PARAM_INT);
 $requete->execute();
 
 $_SESSION['message'] = "Message supprimé";
-header('Location: ../../traitements/boitemail/recusAdmin.php');
+header('Location: ../../templates/boitemailTemplate/msgRecusAdmin.php');
 
 }else{
 $_SESSION['erreur'] = "URL invalide";
-header('Location: ../../traitements/boitemail/recusAdmin.php');
+header('Location: ../../templates/boitemailTemplate/msgRecusAdmin.php');
 }
 
 ?>

@@ -8,8 +8,8 @@ if (!isset($_SESSION["user"])) {
 $titre = "Espace membre";
 $gererTitre = "Modifier mon profil";
 
-include "../layout.php";
-include "../header.php";
+include "../../layout.php";
+include "../../header.php";
 include "../espaces/bienvenu.php";
 include "../buttonBack.php";
 ?>
@@ -35,5 +35,5 @@ include "../buttonBack.php";
 </div>
 
 <?php
-include "../../templates/footer.php";
+include "../../footer.php";
 ?>

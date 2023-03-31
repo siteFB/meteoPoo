@@ -7,8 +7,8 @@ if (!isset($_SESSION["user"])) {
 
 $titre = "Espace administrateur";
 
-include "../layout.php";
-include "../header.php";
+include "../../layout.php";
+include "../../header.php";
 include "../espaces/bienvenu.php";
 ?>
 
@@ -18,14 +18,14 @@ include "../espaces/bienvenu.php";
 <?php
 echo "<div class='container my-5 pb-5 bg-light'>
                 <div class='col-md-12 text-center'>
-                    <button type='button' class='btn btn-success'><a class='text-white' href='/traitements/inscrits/voirInscrits.php'>Voir les inscrits</a></button>
-                    <button type='button' class='btn btn-warning'><a href='gererActu.php'>Gérer l'actualité</a></button>
-                    <button type='button' class='btn btn-primary'><a href='/traitements/boitemail/recusAdmin.php' class='text-white'>Ma messagerie</a></button>
+                    <button type='button' class='btn btn-success'><a class='text-white' href='/templates/liste_des_inscrits.php'>Voir les inscrits</a></button>
+                    <button type='button' class='btn btn-warning'><a href='/templates/ephemerideTemplate/gererActu.php'>Gérer l'actualité</a></button>
+                    <button type='button' class='btn btn-primary'><a href='../boitemailTemplate/msgRecusAdmin.php' class='text-white'>Ma messagerie</a></button>
                     <button type='button' class='btn btn-danger'><a class='text-white' href='profilAdmin.php'>Modifier mon profil</a></button>
                 </div>
             </div>";
 ?>
 
 <?php
-include "../../templates/footer.php";
+include "../../footer.php";
 ?>

@@ -1,31 +1,15 @@
 <?php
-session_start();
-if (!isset($_SESSION["user"])) {
-    header("Location: ../..//templates/formConnexion.php");
-    die();
-    exit;
-}
+include "../../traitements/ephemeride/gererActuTraitement.php";
+?>
 
-require_once('../../base/connexionBDD.php');
-
-$sql = 'SELECT * FROM `ephemeride`';
-
-$query = $db->prepare($sql);
-
-$query->execute();
-
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-require_once('../../base/deconnexionBDD.php');
-
+<?php
 $titre = "Espace administrateur/Gérer l'actualité";
 $gererTitre = "Gérer l'éphéméride";
 
-include "../../templates/layout.php";
-include "../../templates/header.php";
+include "../../layout.php";
+include "../../header.php";
 include "../../templates/espaces/bienvenu.php";
 ?>
-
 <link rel="stylesheet" href="../../boot.css">
 <section>
 
@@ -64,7 +48,7 @@ include "../../templates/espaces/bienvenu.php";
             <div class="container mt-5">
                 <div class="row">
                     <?php
-                    foreach ($result as $ephemeride) {
+                    foreach ($result as $ephemeride):
                     ?>
                         <div class="col-md-4 mt-1 mb-5">
                             <div class="card col" style="height:550px">
@@ -72,23 +56,21 @@ include "../../templates/espaces/bienvenu.php";
                                 <div class="card-body" style="height:200px">
                                     <h3 class="card-title"><?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['titre'])))) ?></h3>
                                     <p class="card-text"><?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['topo'])))) ?></p>
-                                    <a href="/traitements/ephemeride/modifierActu.php?idEphemeride=<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['idEphemeride'])))) ?>" class="btn btn-success active" role="button" aria-pressed="true">Modifier</a>
+                                    <a href="../ephemerideTemplate/modifierActu.php?idEphemeride=<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['idEphemeride'])))) ?>" class="btn btn-success active" role="button" aria-pressed="true">Modifier</a>
                                     <a onclick="return confirm('Are you sure you want to delete ?')" href="/traitements/ephemeride/deleteActu.php?idEphemeride=<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['idEphemeride'])))) ?>" class="btn btn-danger active float-end" role="button" aria-pressed="true">Supprimer</a>
                                 </div>
                             </div>
                         </div>
                     <?php
-                    }
+                    endforeach
                     ?>
                 </div>
-                <a href="/traitements/ephemeride/addActu.php" class="btn btn-warning mb-5"><?php echo '&nbsp'; ?>Ajouter<?php echo '&nbsp'; ?></a>
+                <a href="../ephemerideTemplate/addActu.php" class="btn btn-warning mb-5"><?php echo '&nbsp'; ?>Ajouter<?php echo '&nbsp'; ?></a>
             </div>
         <hr>
     </div>
 </section>
 
-
-
 <?php
-include "../../templates/footer.php";
+include "../../footer.php";
 ?>
