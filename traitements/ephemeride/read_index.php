@@ -1,5 +1,7 @@
 <?php
-require_once('base/connexionBDD.php');
+require_once('libraries/base/connexionBDD.php');
+
+$db = getPdo();
 
 $sql = 'SELECT * FROM `ephemeride`';
 

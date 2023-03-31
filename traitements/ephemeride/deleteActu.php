@@ -1,12 +1,15 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
     header("Location: ../../templates/formConnexion.php");
-    die(); 
+    exit(); 
 }
 
+require_once('../../libraries/base/connexionBDD.php');
+
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
-    require_once('../../base/connexionBDD.php');
+
+    $db = getPdo();
 
     $id = strip_tags(stripslashes(htmlentities(trim($_GET['idEphemeride']))));
 

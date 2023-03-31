@@ -19,9 +19,10 @@ if (isset($_POST) && !empty($_POST)){
             $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
  
 //----------------------------connexion à la base ---------------
-            require_once "../../base/connexionBDD.php";
-
+            require_once('../../libraries/base/connexionBDD.php');
             
+            $db = getPdo();
+           
             $recupNouvelEntree = $db->prepare(" INSERT INTO `users`(`pseudo`,`email`,`pass`)
             VALUES (:pseudo, :email, '$pass')");  
 

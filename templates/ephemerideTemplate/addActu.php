@@ -1,6 +1,7 @@
 <?php
 include "../../traitements/ephemeride/addActuTraitement.php";
 ?>
+
 <?php
 $titre = "Espace administrateur/Gérer l'actualité";
 $gererTitre = "Ajouter une éphéméride";
@@ -36,7 +37,7 @@ include "../espaces/bienvenu.php";
                     $_SESSION['erreur'] = "";
                 }
                 ?>
-                <form action="" method="post">
+                <form action="/traitements/ephemeride/addActuTraitement.php" method="post">
                     <div class="form-group">
                         <label for="imgTemps"></label>
                         <input type="file" id="imgTemps" name="imgTemps" class="form-control" placeholder="image" value="<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['imgTemps'])))) ?>">

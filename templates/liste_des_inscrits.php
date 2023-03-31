@@ -25,9 +25,6 @@ include "../templates/espaces/bienvenu.php";
             <button type='button' class='btn btn-success mx-5 mt-5 '><a class='text-white' href='/templates/espaceAdminister/espaceAdmin.php'>Retour</a></button>
         </div>
                ";
-    } else{
-        header('Location: ../../templates/formConnexion.php');
-    }
     ?>
 </span>
 
@@ -67,7 +64,11 @@ include "../templates/espaces/bienvenu.php";
     </div>
   </div>
 </section>
-
+<?php
+    } else{
+      header('Location: ../../templates/formConnexion.php');
+  }
+?>
 <?php
 include "../footer.php";
 ?>

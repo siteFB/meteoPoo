@@ -1,5 +1,8 @@
 <?php
 
+function getPdo(): PDO
+{
+
 $servername = "localhost";
 $database = "meteoPoo";
 $username = "root";
@@ -12,5 +15,8 @@ try {
 } catch (PDOException $e) {
     echo "erreur de connexion:" . $e->getMessage();
     die();
+
+    return $db;    
 };
+}
 ?>

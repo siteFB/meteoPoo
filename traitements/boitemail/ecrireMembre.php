@@ -1,11 +1,14 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && $user["statut"] == "Membre") {
     header("Location: /templates/formConnexion.php");
     exit();
 }
 
-require_once('../../base/connexionBDD.php');
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+
+$db = getPdo();
 
 if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
     if (isset($_POST['envoimessage'])) {
@@ -36,8 +39,10 @@ if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
                 $ins->execute(array($_SESSION['user']['id'], $id_destinataire, $titreMessage, $message));
 
                 $_SESSION['message'] = "Votre message a bien été envoyé";
-                require_once('../../base/deconnexionBDD.php');
+
+                $db = deco(); 
                 header('Location: msgEcrireMembre.php');
+                
             } else {
                 $_SESSION['erreur'] = "Ce destinataire n'existe pas";
             }

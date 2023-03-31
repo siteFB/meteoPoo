@@ -10,7 +10,9 @@ if (isset($_POST) && !empty($_POST)) {
         && !empty($_POST["email"] && !empty($_POST["pass"]))
     ) {
 
-        require_once "../../base/connexionBDD.php"; 
+        require_once('../../libraries/base/connexionBDD.php');
+        
+        $db = getPdo(); 
 
         $connexionCompte = $db->prepare("SELECT * FROM `users` WHERE `email`= :email");
         $connexionCompte->bindValue(':email', $_POST['email']);

@@ -1,4 +1,3 @@
-<!-------------------------- Footer ------------------------------->    
 <footer class="bg-dark p-4 text-white text-center">
         <h2>Nos partenaires</h2>
         <hr>

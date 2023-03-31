@@ -3,7 +3,7 @@ session_start();
 //si l'utilisateur n'est pas connecté il n'aura pas accès au site
 if (!isset($_SESSION["user"])) {
     header("Location: ../templates/formConnexion.php");
-    die();
+    exit();
 }
 
 $titre = "Espace membre";

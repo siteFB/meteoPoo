@@ -1,12 +1,15 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && $user["statut"] == "Membre") {
     header("Location: ../templates/formConnexion.php");
     die();
 }
 
     if(isset($_GET['idUser']) && !empty($_GET['idUser'])){
-        require_once('../../base/connexionBDD.php');
+
+require_once('../../libraries/base/connexionBDD.php');
+
+$db = getPdo();       
     
         $id = strip_tags($_GET['idUser']);
 
@@ -25,7 +28,7 @@ echo '</pre>';
 if(!$resultat){
     $_SESSION['erreur'] = "Cet id n'existe pas";
     header('Location: ../../templates/boitemailTemplate/msgRecusMembre.php');
-    die();
+    exit();
 }
 
 $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
@@ -43,5 +46,3 @@ header('Location: ../../templates/boitemailTemplate/msgRecusMembre.php');
 $_SESSION['erreur'] = "URL invalide";
 header('Location: ../../templates/boitemailTemplate/msgRecusMembre.php');
 }
-
-?>
