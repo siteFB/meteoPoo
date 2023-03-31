@@ -8,7 +8,7 @@ $gererTitre = "Gérer l'éphéméride";
 
 include "../../layout.php";
 include "../../header.php";
-include "../../templates/espaces/bienvenu.php";
+include "../espaces/bienvenu.php";
 ?>
 <link rel="stylesheet" href="../../boot.css">
 <section>
@@ -24,9 +24,6 @@ include "../../templates/espaces/bienvenu.php";
             <button type='button' class='btn btn-success mx-5 mt-5 '><a class='text-white' href='/templates/espaceAdminister/espaceAdmin.php'>Retour</a></button>
         </div>
                ";
-    } else{
-        header('Location: ../../templates/formConnexion.php');
-    }
     ?>
 </span>
 
@@ -65,12 +62,16 @@ include "../../templates/espaces/bienvenu.php";
                     endforeach
                     ?>
                 </div>
-                <a href="../ephemerideTemplate/addActu.php" class="btn btn-warning mb-5"><?php echo '&nbsp'; ?>Ajouter<?php echo '&nbsp'; ?></a>
+                <a href="/templates/ephemerideTemplate/addActu.php" class="btn btn-warning mb-5"><?php echo '&nbsp'; ?>Ajouter<?php echo '&nbsp'; ?></a>
             </div>
         <hr>
     </div>
 </section>
-
+<?php
+   } else{
+        header('Location: ../../templates/formConnexion.php');
+    }
+?>
 <?php
 include "../../footer.php";
 ?>

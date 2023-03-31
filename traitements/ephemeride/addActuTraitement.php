@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
     header("Location: ../templates/formConnexion.php");
     exit;
 }
@@ -11,7 +11,10 @@ if ($_POST) {
         && isset($_POST['topo']) && !empty($_POST['topo'])
     ) {
 
-        require_once('../../base/connexionBDD.php');
+        require_once('../../libraries/base/connexionBDD.php');
+        require_once('../../libraries/base/deconnexionBDD.php');
+
+        $db = getPdo();
 
         $imgTemps = strip_tags(stripslashes(htmlentities(trim($_POST['imgTemps']))));
         $titre = strip_tags(stripslashes(htmlentities(trim($_POST['titre']))));
@@ -41,7 +44,8 @@ if ($_POST) {
         ];
 
         $_SESSION['message'] = "L'éphéméride' est ajoutée";
-        require_once('../../base/deconnexionBDD.php');
+
+        $db = deco(); 
         header('Location: /templates/ephemerideTemplate/gererActu.php');
         
     } else {

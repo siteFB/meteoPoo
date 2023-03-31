@@ -1,14 +1,8 @@
 <?php
-session_start();
-require_once('../../base/connexionBDD.php');
+include "../../traitements/ephemeride/consulterMeteoTraitement.php";
+?>
 
-$sql = 'SELECT * FROM `ephemeride`';
-$query = $db->prepare($sql);
-$query->execute();
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-require_once('../../base/deconnexionBDD.php');
-
+<?php
 $titre = "Consulter la météo";
 $gererTitre = "Consulter l'éphéméride";
 
@@ -17,7 +11,6 @@ include "../../header.php";
 include "../espaces/bienvenu.php";
 include "../buttonBack.php";
 ?>
-
 <link rel="stylesheet" href="../../boot.css">
 
 <h2 class="display-5 fw-bold text-center mb-5 mt-5">Éphéméride</h2>

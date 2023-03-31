@@ -1,7 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
-    header("Location: ../../formulaires/formConnexion.php");
+if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
+    header("Location: ../../templates/formConnexion.php");
+    exit();
 }
 
 if ($_POST) {
@@ -12,7 +13,10 @@ if ($_POST) {
         && isset($_POST['topo']) && !empty($_POST['topo'])
     ) {
 
-        require_once('../../base/connexionBDD.php');
+        require_once('../../libraries/base/connexionBDD.php');
+        require_once('../../libraries/base/deconnexionBDD.php');
+        
+        $db = getPdo();
 
         $id = strip_tags($_POST['idEphemeride']);
         $titre = strip_tags($_POST['titre']);
@@ -81,10 +85,10 @@ if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
    } else {
         $message = "Un problème a eu lieu lors de l'upload";
     }
+
 } else {
     $message = "Aucune image à télécharger";
 }
-
 
 //Renommer l'image et envoi
 $cheminEtNomTemporaire = $_FILES['imgTemps']['tmp_name'];
@@ -105,8 +109,8 @@ if ($moveIsOk) {
 }
 
         $_SESSION['message'] = "L'éphéméride' est modifiée";
-        require_once('../../base/deconnexionBDD.php');
 
+        $db = deco();  
         header('Location: /templates/ephemerideTemplate/gererActu.php');
 
     } else {
@@ -115,7 +119,9 @@ if ($moveIsOk) {
 }
 
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
-    require_once('../../base/connexionBDD.php');
+
+    require_once('../../libraries/base/connexionBDD.php');
+    $db = getPdo();    
 
     $id = strip_tags($_GET['idEphemeride']);
 

@@ -1,12 +1,15 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
     header("Location: ../templates/formConnexion.php");
     exit();
 }
 
 if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
-    require_once('../../base/connexionBDD.php');
+
+    require_once('../../libraries/base/connexionBDD.php');
+    
+$db = getPdo();
 
     $id = strip_tags(stripslashes(htmlentities(trim(($_GET['idUser'])))));
     $id_destinataire = strip_tags(stripslashes(htmlentities(trim($_SESSION['user']['id']))));
@@ -25,7 +28,7 @@ if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
 
     $msg->execute();
 
-    $msg_nbr = $msg->rowCount();   // nb de messages d'un seul expéditeur
+    $msg_nbr = $msg->rowCount();
 
     $resultat = $msg->fetchAll(PDO::FETCH_ASSOC);
 

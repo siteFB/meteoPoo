@@ -3,13 +3,13 @@ $titre = "Déconnexion espace membre";
 
 include "layout.php";
 include "header.php";
-
 ?>
 <?php
 session_start();
+require_once('../../libraries/base/deconnexionBDD.php');
 
 //Déconnxeion de la base de données
-$db = null;
+$db = deco();
 
 //Supprimer la session si elle existe
 if (!isset($_SESSION["user"])) {
