@@ -30,8 +30,8 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
 $titre = "Espace consulter la météo: détails";
 $gererTitre = "Zoom sur l'éphéméride";
 
-include "../layout.php";
-include "../header.php";
+include "../../layout.php";
+include "../../header.php";
 include "../espaces/bienvenu.php";
 include "../buttonBack.php";
 ?>
@@ -45,5 +45,5 @@ include "../buttonBack.php";
 </div>
 
 <?php
-include "../footer.php";
+include "../../footer.php";
 ?>

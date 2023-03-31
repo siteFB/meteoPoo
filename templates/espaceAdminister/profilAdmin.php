@@ -1,15 +1,15 @@
 <?php
 session_start();
 if (!isset($_SESSION["user"])) {
-    header("Location: ../..//templates/formConnexion.php");
+    header("Location: ../../templates/formConnexion.php");
     exit;
 }
 
 $titre = "Espace administrateur/Modifier le profil";
 $gererTitre = "Modifier mon profil";
 
-include "../layout.php";
-include "../header.php";
+include "../../layout.php";
+include "../../header.php";
 include "../espaces/bienvenu.php";
 include "../buttonBack.php";
 ?>
@@ -35,5 +35,5 @@ include "../buttonBack.php";
 </div>
 
 <?php
-include "../..//templates/footer.php";
+include "../../footer.php";
 ?>

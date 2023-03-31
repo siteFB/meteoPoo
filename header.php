@@ -11,7 +11,7 @@
                     <!-------------------------- Gérer les accès de navigation selon la connexion ------------------------------->
                     <?php if (!isset($_SESSION["user"])) : ?>
                         <li class="nav-item"><a href="../templates/formConnexion.php" class="nav-link text-white">Se connecter</a></li>
-                        <li class="nav-item"><a href="#inscription" class="nav-link text-white">S'inscrire</a></li>
+                        <li class="nav-item"><a href="/index.php/#inscription" class="nav-link text-white">S'inscrire</a></li>
                     <?php elseif (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Membre")) : ?>
                         <li class="nav-item"><a href="../espaces/consulterMeteo.php" class="nav-link text-white">Éphéméride</a></li>
                         <li class="nav-item"><a href="../espaceMembres/profilMembre.php" class="nav-link text-white">Profil</a></li>
@@ -28,7 +28,7 @@
             <ul class="navbar-nav me-auto mb-2">
                 <?php if (!isset($_SESSION["user"])) : ?>
                     <li class="nav-item"><a href="../templates/formConnexion.php" class="nav-link text-white">Se connecter</a></li>
-                    <li class="nav-item"><a href="#inscription" class="nav-link text-white">S'inscrire</a></li>
+                    <li class="nav-item"><a href="/index.php/#inscription" class="nav-link text-white">S'inscrire</a></li>
                 <?php elseif (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Membre")) : ?>
                     <li class="nav-item"><a href="../espaces/consulterMeteo.php" class="nav-link text-white">Éphéméride</a></li>
                     <li class="nav-item"><a href="../espaceMembres/profilMembre.php" class="nav-link text-white">Profil</a></li>

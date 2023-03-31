@@ -1,8 +1,8 @@
 <?php
 $titre = "Connexion";
 
-include "layout.php";
-include "header.php";
+include "../layout.php";
+include "../header.php";
 ?>
 <!-------------------------- Formulaire de connexion ------------------------------->
 <div class="container col-xl-10 col-xxl-8 pt-2 mb-3" id="sinscrire">
@@ -31,5 +31,5 @@ include "header.php";
 </div>
 
 <?php
-include "footer.php";
+include "../footer.php";
 ?>
