@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Membre") {
-    header("Location: ../templates/formConnexion.php");
-    exit();
-}
 
 require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+
+sess("Membre", "../../");
 
 $db = getPdo();
 

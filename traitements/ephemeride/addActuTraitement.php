@@ -1,18 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
-    header("Location: ../templates/formConnexion.php");
-    exit;
-}
+
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+sess("Admin", "../../");
 
 if ($_POST) {
     if (isset($_POST['imgTemps']) && !empty($_POST['imgTemps'])
         && isset($_POST['titre']) && !empty($_POST['titre'])
         && isset($_POST['topo']) && !empty($_POST['topo'])
     ) {
-
-        require_once('../../libraries/base/connexionBDD.php');
-        require_once('../../libraries/base/deconnexionBDD.php');
 
         $db = getPdo();
 
@@ -24,7 +24,6 @@ if ($_POST) {
         $tmp_name = $_FILES['imgTemps']['tmp_name'];
         $destination = "../../images/" . $image;
         move_uploaded_file($tmp_name, $destination);
-        //echo $image;
 
         $sql = 'INSERT INTO `ephemeride`(`imgTemps`, `titre`, `topo`) VALUES (:imgTemps, :titre, :topo);';
 
@@ -43,13 +42,13 @@ if ($_POST) {
             "topo" => strip_tags(stripslashes(htmlentities(trim($ephemeride["topo"]))))
         ];
 
-        $_SESSION['message'] = "L'éphéméride' est ajoutée";
+        info("message", "L'éphéméride' est ajoutée");
 
         $db = deco(); 
-        header('Location: /templates/ephemerideTemplate/gererActu.php');
+        redirect("/templates/ephemerideTemplate/gererActu.php");
         
     } else {
-        $_SESSION['erreur'] = "Le formulaire est incomplet";
+        info("erreur", "Le formulaire est incomplet");
     }
 }
 ?>

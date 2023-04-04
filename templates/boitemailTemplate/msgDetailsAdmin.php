@@ -1,4 +1,5 @@
 <?php
+require_once('../../libraries/utils/utils.php');
 include "../../traitements/boitemail/detailsAdmin.php";
 ?>
 
@@ -17,27 +18,13 @@ include "../../templates/espaces/bienvenu.php";
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <section>
-
-<span class="d-flex justify-content-center">
-    <h2 class="text-center pb-4 mt-5 mb-5 text-primary"><?php echo strip_tags(stripslashes(htmlentities(trim($gererTitre)))) ?></h2>
-    <?php
-
-    if (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) {
-
-        echo "
-        <div>
-            <button type='button' class='btn btn-success mx-5 mt-5 '><a class='text-white' href='/templates/espaceAdminister/espaceAdmin.php'>Retour</a></button>
-        </div>
-               ";
-    ?>
-</span>
-
+<?php
+buttonBack("Espace Administrateur", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
+?>
     <div class="container mb-5">
-        <!----------------------------------------------------------------------------->
         <div class="col-md-12 pb-4">
             <div>
                 <div class="row bg-white border border-muted rounded">
-                    <!----------------------------------------------------------------------------->
                     <div class="col-md-3">
                         <div>
                             <ul class="nav flex-column mx-3">
@@ -46,7 +33,6 @@ include "../../templates/espaces/bienvenu.php";
                             </ul>
                         </div>
                     </div>
-                    <!----------------------------------------------------------------------------->
                     <div class="bg-light border border-muted rounded col-10 mx-auto col-lg-7 pt-4 pb-2 mt-4 mb-4">
                         <?php
                         if (!empty($_SESSION['erreur'])) {
@@ -61,7 +47,6 @@ include "../../templates/espaces/bienvenu.php";
                         }
                         ?>
                         <div>
-
                             <div class="wrapinput mb-5">
                                 <label for="auteur">Expéditeur</label>
                                 <?php
@@ -93,17 +78,13 @@ include "../../templates/espaces/bienvenu.php";
                             ?>
                         </div>
                     </div>
-                    <!----------------------------------------------------------------------------->
+
                 </div>
             </div>
         </div>
     </div>
 </section>
-<?php
-    } else{
-        header('Location: ../../templates/formConnexion.php');
-    }
-?>
+
 <?php
 include "../../footer.php";
 ?>

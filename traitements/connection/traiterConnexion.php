@@ -1,7 +1,9 @@
 <?php
 session_start();
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/utils/utils.php');
 
-//Protéger la validation avec le bouton
+// Protect validation with button
 if (isset($_POST['btnConnexion'])) {
 
 if (isset($_POST) && !empty($_POST)) {
@@ -9,8 +11,6 @@ if (isset($_POST) && !empty($_POST)) {
         isset($_POST["email"], $_POST["pass"])
         && !empty($_POST["email"] && !empty($_POST["pass"]))
     ) {
-
-        require_once('../../libraries/base/connexionBDD.php');
         
         $db = getPdo(); 
 
@@ -20,27 +20,27 @@ if (isset($_POST) && !empty($_POST)) {
         $user = $connexionCompte->fetch();
 
         if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            header("Location: templates/formConnexion.php");
-            $_SESSION['erreur'] = "Cet utilisateur et/ou le mot de passe est incorrect";
-            sleep(1);  // Contrer Force Brute: Arrêt d'1s
+            info("erreur", "Cet utilisateur et/ou le mot de passe est incorrect");  // Blur messages
+            redirect("../../templates/formConnexion.php");
+            sleep(1);  // Protect against"Force Brute": Stop for 1s
         }
 
-        $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
+        $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);   // Create and secure password
        if (!password_verify($_POST["pass"], $pass)) {
-        header("Location: templates/formConnexion.php");
-        $_SESSION['erreur'] = "Cet utilisateur et/ou le mot de passe est incorrect";
+        info("erreur", "Cet utilisateur et/ou le mot de passe est incorrect");
+        redirect("../../templates/formConnexion.php");
         sleep(1);
         }
 
         if (!$user) {
-            header("Location: templates/formConnexion.php");
-            $_SESSION['erreur'] = "Cet utilisateur et/ou le mot de passe est incorrect";
+            info("erreur", "Cet utilisateur et/ou le mot de passe est incorrect");
+            redirect("../../templates/formConnexion.php");
             sleep(1);
         }
 
-        if (!password_verify($_POST["pass"], $user["pass"])) {
-            header("Location: templates/formConnexion.php");
-            $_SESSION['erreur'] = "Cet utilisateur et/ou le mot de passe est incorrect2!";
+        if (!password_verify($_POST["pass"], $user["pass"])) {  // Verify password
+            info("erreur", "Cet utilisateur et/ou le mot de passe est incorrect!");
+            redirect("../../templates/formConnexion.php");
             sleep(1);
         }
 
@@ -50,27 +50,24 @@ if (isset($_POST) && !empty($_POST)) {
             "email" => $user["email"],
             "dateInscrit" => $user["dateInscrit"],
             "statut" => $user["statut"]
-        ];
-       
+        ];      
     }
-
-        //Redirection selon le statut
-        //Protéger les champs vides avec la session
+        // Redirect according to status & Protect empty fields with session
         if (isset($_SESSION['user']) && $user["statut"] == "Membre") {
-            header("Location: /templates/espaceMembres/espaceMembre.php");
+            redirect("../../templates/espaceMembres/espaceMembre.php");
 
         } elseif (isset($_SESSION['user']) && $user["statut"] == "Admin") {
-            header("Location: /templates/espaceAdminister/espaceAdmin.php");
+            redirect("../../templates/espaceAdminister/espaceAdmin.php");
             
         } else {
-            header("Location: /../templates/formConnexion.php");
-            die('Vous devez remplir tous les champs');
+            redirect("../../templates/formConnexion.php");
+            sleep(1); // & blurry message
         }
     }
 
 //Redirection si le bouton n'est pas utilisé  
 }else{
-    header("Location: /../templates/formConnexion.php");
-    die(); 
+    redirect("../../templates/formConnexion.php");
+    exit(); 
 }
 ?>

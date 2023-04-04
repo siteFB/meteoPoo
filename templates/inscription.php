@@ -1,4 +1,5 @@
-<div class="container col-xl-10 col-xxl-8 pt-2 my-3">
+<section>
+    <div class="container col-xl-10 col-xxl-8 pt-2 my-3">
         <div class="row align-items-center g-5 py-3">
             <section id="inscription" class="col-lg-7 text-center text-lg-start">
                 <h2 class="display-4 fw-bold lh-1 mb-3">Inscription</h2>
@@ -37,6 +38,5 @@
             <button class="w-100 btn btn-lg btn-primary" type="submit" name="forminscription">S'inscrire</button>
             </form>
         </div>
-    </div>
     </div>
 </section>

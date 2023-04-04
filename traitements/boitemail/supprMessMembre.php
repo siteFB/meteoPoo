@@ -1,48 +1,41 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Membre") {
-    header("Location: ../templates/formConnexion.php");
-    die();
-}
-
-    if(isset($_GET['idUser']) && !empty($_GET['idUser'])){
 
 require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
 
-$db = getPdo();       
-    
-        $id = strip_tags($_GET['idUser']);
+sess("Membre", "../../");
 
-$requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
+if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
 
-$requete->bindValue(':id', $id, PDO::PARAM_INT);
+    $db = getPdo();
 
-$requete->execute();
+    $id = strip_tags($_GET['idUser']);
 
-$resultat = $requete->fetch();
+    $requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
+    $requete->bindValue(':id', $id, PDO::PARAM_INT);
+    $requete->execute();
 
-echo '<pre>';
-print_r($resultat);
-echo '</pre>';
+    $resultat = $requete->fetch();
 
-if(!$resultat){
-    $_SESSION['erreur'] = "Cet id n'existe pas";
-    header('Location: ../../templates/boitemailTemplate/msgRecusMembre.php');
-    exit();
-}
+    if (!$resultat) {
+        info("erreur", "Cet id n'existe pas");
+        redirect("../../templates/boitemailTemplate/msgRecusMembre.php");   
+        exit();
+    }
 
-$sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
+    $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
 
-$requete = $db->prepare($sql);
+    $requete = $db->prepare($sql);
+    $requete->bindValue(':id', $id, PDO::PARAM_INT);
+    $requete->execute();
 
-$requete->bindValue(':id', $id, PDO::PARAM_INT);
+    info("message", "Message supprimé");
+    redirect("../../templates/boitemailTemplate/msgRecusMembre.php");
 
-$requete->execute();
-
-$_SESSION['message'] = "Message supprimé";
-header('Location: ../../templates/boitemailTemplate/msgRecusMembre.php');
-
-}else{
-$_SESSION['erreur'] = "URL invalide";
-header('Location: ../../templates/boitemailTemplate/msgRecusMembre.php');
+} else {
+    info("erreur", "URL invalide");
+    redirect("../../templates/boitemailTemplate/msgRecusMembre.php");
 }

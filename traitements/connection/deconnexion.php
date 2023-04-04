@@ -1,23 +1,26 @@
 <?php
-$titre = "Déconnexion espace membre";
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+$titre = "Déconnexion de votre espace personnel";
 
 include "layout.php";
 include "header.php";
 ?>
 <?php
 session_start();
-require_once('../../libraries/base/deconnexionBDD.php');
 
-//Déconnxeion de la base de données
-$db = deco();
+if (isset($_SESSION["user"])) {
 
-//Supprimer la session si elle existe
-if (!isset($_SESSION["user"])) {
-unset($_SESSION["user"]);
-    header("Location: /templates/formConnexion.php");
-    die();
+    // Supprimer la session 
+    unset($_SESSION["user"]);
+    // Déconnecter BDD
+    $db = deco();
+
+    redirect("../../templates/formConnexion.php");
+    exit();
 }
-header("Location: /templates/formConnexion.php");
+redirect("../../templates/formConnexion.php");
 ?>
 
 

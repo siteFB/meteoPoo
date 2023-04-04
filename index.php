@@ -1,5 +1,5 @@
 <?php
-include "traitements/ephemeride/read_index.php";
+include "traitements/ephemeride/ephemerideActusTraitement.php";
 ?>
 <?php
 $titre = "Accueil";
@@ -34,32 +34,30 @@ include "templates/inscription.php";
 
     <div class="container bg-light col-xl-10 col-xxl-12 pt-2">
         <div class="row align-items-center g-5 py-3">
-<!------------ Fake message ----------->
+            <!------------ Fake message ----------->
             <div class="col-10 mx-auto col-lg-5 pt-4 mt-4 mb-4">
-                <form action="../messagerie/envoi.php" method="POST" class="p-5 pb-1 mt-3 border rounded-3 bg-white" id="sinscrire">
-                <h4 class="display-6 pb-3 text-center">Laissez un message</h4>
+                <form action="../messagerie/envoi.php" method="POST" class="p-5 mt-3 border rounded-3 bg-white" id="sinscrire">
+                    <h4 class="display-6 pb-3 text-center">Laissez un message</h4>
                     <div class="form-outline">
-                        <input type="text"  class="form-control bg-light" />
-                        <label class="form-label text-secondary" for="form4Example1">Expéditeur</label>
+                        <label class="form-label" for="form4Example1">De :</label>
+                        <input type="text" class="form-control bg-light" placeholder="De: Pseudo" />
                     </div>
                     <div class="form-outline">
+                        <label class="form-label" for="form4Example1">à</label>
+                        <input type="text" class="form-control bg-light" placeholder="Matéo"/>
+                    </div>
+                    <div class="form-outline">
+                        <label class="form-label" for="form4Example1">Titre</label>
                         <input type="text" class="form-control bg-light" />
-                        <label class="form-label text-secondary" for="form4Example1">Destinataire</label>
                     </div>
                     <div class="form-outline">
-                        <input type="text" class="form-control bg-light" />
-                        <label class="form-label text-secondary" for="form4Example1">Titre</label>
-                    </div>
-                    <div class="form-outline">
+                        <label class="form-label" for="form4Example3">Message</label>
                         <textarea class="form-control bg-light" rows="4"></textarea>
-                        <label class="form-label text-secondary" for="form4Example3">Message</label>
                     </div>
-
                     <button type="button" class="btn btn-primary mt-2 mb-3" data-toggle="tooltip" data-bs-placement="right" title="Vous devez vous inscrire">Envoyer</button>
-
                 </form>
             </div>
-<!------------ Coordonnées ----------->
+            <!------------ Coordonnées ----------->
             <div class="container col-xl-4 col-xxl-6 pt-2">
                 <div>
                     <div class="col-10 mx-auto col-lg-5 pt-4 mt-4 mb-4">
