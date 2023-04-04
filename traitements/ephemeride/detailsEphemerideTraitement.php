@@ -1,13 +1,12 @@
-<?php
+<?php    // Zoom météo réservé aux inscrits connectés
 session_start();
-if (!isset($_SESSION["user"])) {
-    header("Location: ../../templates/formConnexion.php");
-    exit(); 
-}
 
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+if (isset($_SESSION["user"])){
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
-  
-    require_once('../../libraries/base/connexionBDD.php');
     
     $db = getPdo();
 
@@ -15,21 +14,23 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
 
     $sql = 'SELECT `imgTemps` FROM `Ephemeride` WHERE `idEphemeride` = :id;';
 
-    $query = $db->prepare($sql);
-    
+    $query = $db->prepare($sql);    
     $query->bindValue(':id', $id, PDO::PARAM_INT);
-
     $query->execute();
 
     $produit = $query->fetch();
 
     if(!$produit){
-        $_SESSION['erreur'] = "Cet id n'existe pas";
-        header('Location: consulterMeteo.php');
+        info("erreur", "Cet id n'existe pas");
+        redirect("consulterMeteo.php");
     }
-    
+
 }else{
-    $_SESSION['erreur'] = "URL invalide";
-    header('Location: consulterMeteo.php');
+    info("erreur", "URL invalide");
+    redirect("consulterMeteo.php");
+}
+}else{
+    info("erreur", "Vous devez vous connecter");
+    redirect("index.php");
 }
 ?>

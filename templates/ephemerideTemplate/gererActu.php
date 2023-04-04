@@ -1,7 +1,6 @@
 <?php
 include "../../traitements/ephemeride/gererActuTraitement.php";
 ?>
-
 <?php
 $titre = "Espace administrateur/Gérer l'actualité";
 $gererTitre = "Gérer l'éphéméride";
@@ -11,41 +10,39 @@ include "../../header.php";
 include "../espaces/bienvenu.php";
 ?>
 <link rel="stylesheet" href="../../boot.css">
+
 <section>
+    <span class="d-flex justify-content-center">
+        <h2 class="text-center mt-5 mb-5"><?php echo strip_tags(stripslashes(htmlentities(trim($gererTitre)))) ?></h2>
+        <?php
 
-<span class="d-flex justify-content-center">
-    <h2 class="text-center mt-5 mb-5"><?php echo strip_tags(stripslashes(htmlentities(trim($gererTitre)))) ?></h2>
-    <?php
-    
-    if (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) {
+        if (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) {
 
-        echo "
+            echo "
         <div>
             <button type='button' class='btn btn-success mx-5 mt-5 '><a class='text-white' href='/templates/espaceAdminister/espaceAdmin.php'>Retour</a></button>
         </div>
                ";
-    ?>
-</span>
-
+        ?>
+    </span>
     <div class="container mb-5" id="actuE23">
         <?php
-        if (!empty($_SESSION['erreur'])) {
-            echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-            $_SESSION['erreur'] = "";
-        }
+            if (!empty($_SESSION['erreur'])) {
+                echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
+                $_SESSION['erreur'] = "";
+            }
         ?>
         <?php
-        if (!empty($_SESSION['message'])) {
-            echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-            $_SESSION['message'] = "";
-        }
+            if (!empty($_SESSION['message'])) {
+                echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
+                $_SESSION['message'] = "";
+            }
         ?>
-
         <section>
             <div class="container mt-5">
                 <div class="row">
                     <?php
-                    foreach ($result as $ephemeride):
+                    foreach ($result as $ephemeride) :
                     ?>
                         <div class="col-md-4 mt-1 mb-5">
                             <div class="card col" style="height:550px">
@@ -64,14 +61,16 @@ include "../espaces/bienvenu.php";
                 </div>
                 <a href="/templates/ephemerideTemplate/addActu.php" class="btn btn-warning mb-5"><?php echo '&nbsp'; ?>Ajouter<?php echo '&nbsp'; ?></a>
             </div>
-        <hr>
+            <hr>
     </div>
 </section>
+
 <?php
-   } else{
-        header('Location: ../../templates/formConnexion.php');
-    }
+        } else {
+            header('Location: ../../templates/formConnexion.php');
+        }
 ?>
+
 <?php
 include "../../footer.php";
 ?>

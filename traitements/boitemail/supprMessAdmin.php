@@ -1,51 +1,48 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
-    header("Location: ../templates/formConnexion.php");
-    die();
+
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+sess("Admin", "../../");
+
+if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
+
+    $db = getPdo();
+
+    $id = strip_tags($_GET['idUser']);
+
+    $requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
+
+    $requete->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $requete->execute();
+
+    $resultat = $requete->fetch();
+
+    if (!$resultat) {
+        info("erreur", "Cet id n'existe pas");
+        redirect("../../templates/boitemailTemplate/msgRecusAdmin.php");
+        exit();
+    }
+
+    $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
+
+    $requete = $db->prepare($sql);
+
+    $requete->bindValue(':id', $id, PDO::PARAM_INT);
+
+    $requete->execute();
+
+    info("message", "Message supprimé");
+    redirect("../../templates/boitemailTemplate/msgRecusAdmin.php");
+
+
+} else {
+    info("erreur", "URL invalide");
+    redirect("../../templates/boitemailTemplate/msgRecusAdmin.php");
 }
-
-    if(isset($_GET['idUser']) && !empty($_GET['idUser'])){
-
-        require_once('../../libraries/base/connexionBDD.php');
-        
-        $db = getPdo();        
-    
-        $id = strip_tags($_GET['idUser']);
-
-$requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
-
-$requete->bindValue(':id', $id, PDO::PARAM_INT);
-
-$requete->execute();
-
-$resultat = $requete->fetch();
-
-echo '<pre>';
-print_r($resultat);
-echo '</pre>';
-
-if(!$resultat){
-    $_SESSION['erreur'] = "Cet id n'existe pas";
-    header('Location: ../../templates/boitemailTemplate/msgRecusAdmin.php');
-    die();
-}
-
-$sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
-
-$requete = $db->prepare($sql);
-
-$requete->bindValue(':id', $id, PDO::PARAM_INT);
-
-$requete->execute();
-
-$_SESSION['message'] = "Message supprimé";
-header('Location: ../../templates/boitemailTemplate/msgRecusAdmin.php');
-
-}else{
-$_SESSION['erreur'] = "URL invalide";
-header('Location: ../../templates/boitemailTemplate/msgRecusAdmin.php');
-}
-
 ?>
 

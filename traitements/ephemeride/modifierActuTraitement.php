@@ -1,9 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
-    header("Location: ../../templates/formConnexion.php");
-    exit();
-}
+
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+sess("Admin", "../../");
 
 if ($_POST) {
     if (
@@ -12,9 +15,6 @@ if ($_POST) {
         && isset($_POST['titre']) && !empty($_POST['titre'])
         && isset($_POST['topo']) && !empty($_POST['topo'])
     ) {
-
-        require_once('../../libraries/base/connexionBDD.php');
-        require_once('../../libraries/base/deconnexionBDD.php');
         
         $db = getPdo();
 
@@ -26,7 +26,6 @@ if ($_POST) {
         $tmp_name = $_FILES['imgTemps']['tmp_name'];
         $size = $_FILES['imgTemps']['size'];
         $error = $_FILES['imgTemps']['error'];
-
     
         $sql = 'UPDATE `ephemeride` SET `imgTemps`=:imgTemps, `titre`=:titre, `topo`=:topo WHERE `idEphemeride`=:id;';
 
@@ -39,7 +38,6 @@ if ($_POST) {
 
         $query->execute();
 
-
 // Upload de l'image et vérifier chaque clé: name, type, fichier temp, error et taille
 if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
 
@@ -49,19 +47,16 @@ if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
         if(!in_array($typeMime, $types_autorises)){
 
             $size = filesize($_FILES['imgTemps']['tmp_name']);  //taille
-            if($size > 10000){ 
-                $message = "L'image ne doit pas dépasser 10000 octets soit 10ko ";
-            
-                }else{  // nom et temp avant envoi
+            if($size > 10000){
+                info("erreur", "L'image ne doit pas dépasser 10ko");
+
+                }else{
+
                 // Nettoyer le fichier, sécurité
-                $nomAvantNettoyage = $_POST['fileName'];
-                                
-                $nomEnCoursDeNettoyage = preg_replace('~[\\pL\d]+~u', '-', $nomAvantNettoyage);
-                                
-                $nomEnCoursDeNettoyage = trim($nomEnCoursDeNettoyage, '-'); 
-                                
-                $nomEnCoursDeNettoyage = iconv('utf-8', 'us-ascii//TRANSLIT', $nomEnCoursDeNettoyage);
-                                
+                $nomAvantNettoyage = $_POST['fileName'];                                
+                $nomEnCoursDeNettoyage = preg_replace('~[\\pL\d]+~u', '-', $nomAvantNettoyage);                                
+                $nomEnCoursDeNettoyage = trim($nomEnCoursDeNettoyage, '-');                                 
+                $nomEnCoursDeNettoyage = iconv('utf-8', 'us-ascii//TRANSLIT', $nomEnCoursDeNettoyage);                                
                 $nomEnCoursDeNettoyage = strtolower($nomEnCoursDeNettoyage);
 
                 $nomNettoye = preg_replace('~[^-\w]+~', '', $nomEnCoursDeNettoyage);
@@ -73,21 +68,22 @@ if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
                 // Définitif         
                 $moveIsOk = move_uploaded_file($_FILES['imgTemps']['tmp_name'], $cheminDeDestination);
                     if ($moveIsOk) {
-                        $message = "Image déplacée avec succès"; 
+                        $message = "Image déplacée avec succès";
+                        info("message", "Image déplacée avec succès");
                         } else {
                              $message = 'echec, l\'image n\'a pas pu être déplacée';
                                 }
                 }
 }else{
-    $message = "Il faut obligatoire une image de type png, jpeg ou jpg";
+    info("erreur", "Utiliser un format accepté: png, jpeg ou jpg");
 }
 
    } else {
-        $message = "Un problème a eu lieu lors de l'upload";
+        info("erreur", "Un problème a eu lieu lors de l'upload");
     }
 
 } else {
-    $message = "Aucune image à télécharger";
+    info("erreur", "Aucune image à télécharger");
 }
 
 //Renommer l'image et envoi
@@ -102,25 +98,23 @@ $cheminEtNomDefinitif = '../../images/' . $nouveauNom;
 $moveIsOk = move_uploaded_file($cheminEtNomTemporaire, $cheminEtNomDefinitif);
 
 if ($moveIsOk) {
-    $message = "L'image est uploadée";
+    info("message", "L'image est uploadée");
     
 } else {
-    $message = 'echec de l\'upload';
+    info("erreur", "Échec de l\'upload");
 }
-
-        $_SESSION['message'] = "L'éphéméride' est modifiée";
-
+        info("message", "L'éphéméride est modifiée");
         $db = deco();  
-        header('Location: /templates/ephemerideTemplate/gererActu.php');
+
+        redirect("/templates/ephemerideTemplate/gererActu.php");
 
     } else {
-        $_SESSION['erreur'] = "Formulaire incomplet";
+        info("erreur", "Le formulaire est incomplet");
     }
 }
 
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
 
-    require_once('../../libraries/base/connexionBDD.php');
     $db = getPdo();    
 
     $id = strip_tags($_GET['idEphemeride']);
@@ -128,20 +122,17 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
     $sql = 'SELECT * FROM `ephemeride` WHERE `idEphemeride`=:id';
 
     $query = $db->prepare($sql);
-
     $query->bindValue(':id', $id, PDO::PARAM_INT);
-
     $query->execute();
 
     $ephemeride = $query->fetch();
 
-
     if (!$ephemeride) {
-        $_SESSION['erreur'] = "Cette éphéméride n'existe pas";
-        header('Location: /templates/ephemerideTemplate/gererActu.php');
+        info("erreur", "Cette éphéméride n'existe pas");
+        redirect("/templates/ephemerideTemplate/gererActu.php");
     }
+    
 } else {
-    $_SESSION['erreur'] = "URL invalide";
-    header('Location: /templates/ephemerideTemplate/gererActu.php');
+    info("erreur","URL invalide");
+    redirect("/templates/ephemerideTemplate/gererActu.php");
 }
-?>

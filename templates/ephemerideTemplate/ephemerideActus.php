@@ -1,10 +1,12 @@
-<!-------------------------- Actus ------------------------------->
+<link rel="stylesheet" href="../../boot.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
 <section>
     <h2 class="display-5 fw-bold text-center mt-5 mb-5">Éphéméride</h2>
     <div class="container">
         <div class="row mb-5">
             <?php
-            foreach ($result as $ephemeride):
+            foreach ($result as $ephemeride) :
             ?>
                 <div class="col-md-4 mb-5">
                     <div class="card col" style="height:550px">
@@ -21,3 +23,5 @@
             ?>
         </div>
     </div>
+</section>
+

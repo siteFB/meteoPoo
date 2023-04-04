@@ -1,13 +1,14 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Membre") {
-    header("Location: ../templates/formConnexion.php");
-    exit();
-}
-
-if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
 
 require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+sess("Membre", "../../");
+
+if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
 
 $db = getPdo();
 
@@ -33,8 +34,8 @@ $db = getPdo();
     $resultat = $msg->fetchAll(PDO::FETCH_ASSOC);
 
     if (!$resultat) {
-        $_SESSION['erreur'] = "Cet id n'existe pas";
-        header('Location: /traitements/boitemail/recusMembre.php');
+        info("erreur", "Cet id n'existe pas");
+        redirect("/templates/boitemailTemplate/msgRecusMembre.php");
     }
 }
 ?>

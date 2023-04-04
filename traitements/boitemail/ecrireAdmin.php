@@ -1,12 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
-    header("Location: /templates/formConnexion.php");
-    exit();
-}
 
 require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/base/deconnexionBDD.php');
+require_once('../../libraries/utils/utils.php');
+
+sess("Admin", "../../");
 
 $db = getPdo();
 
@@ -38,16 +38,16 @@ if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
                 $ins = $db->prepare('INSERT INTO messagerie(id_expediteur, id_destinataire, titreMessage, mesage) VALUES (?, ?, ?, ?)');
                 $ins->execute(array($_SESSION['user']['id'], $id_destinataire, $titreMessage, $message));
 
-                $_SESSION['message'] = "Votre message a bien été envoyé";
-
-                $db = deco(); 
-                header('Location: msgEcrireAdmin.php');
+                info("message", "Votre message a bien été envoyé");
+                $db = deco();
+                
+                redirect("msgEcrireAdmin.php");
 
             } else {
-                $_SESSION['erreur'] = "Ce destinataire n'existe pas";
+                info("erreur", "Ce destinataire n'existe pas");
             }
         } else {
-            $_SESSION['erreur'] = "Le formulaire est incomplet";
+            info("erreur", "Le formulaire est incomplet");
         }
     }
 

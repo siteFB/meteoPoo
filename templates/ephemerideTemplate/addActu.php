@@ -12,22 +12,20 @@ include "../espaces/bienvenu.php";
 ?>
 
 <link rel="stylesheet" href="../../boot.css">
+
 <section>
+    <span class="d-flex justify-content-center mt-5">
+        <h2 class="text-center mt-5 mb-5 text-primary"><?php echo strip_tags(stripslashes(htmlentities(trim($gererTitre)))) ?></h2>
+        <?php
+        if (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) {
 
-<span class="d-flex justify-content-center mt-5">
-    <h2 class="text-center mt-5 mb-5 text-primary"><?php echo strip_tags(stripslashes(htmlentities(trim($gererTitre)))) ?></h2>
-    <?php
-    
-    if (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) {
-
-        echo "
+            echo "
         <div>
             <button type='button' class='btn btn-success mx-5 mt-5 '><a class='text-white' href='/templates/espaceAdminister/espaceAdmin.php'>Retour</a></button>
         </div>
-               ";   
-    ?>
-</span>
-
+               ";
+        ?>
+    </span>
     <main class="container mb-5 w-25" id="actuE23">
         <div>
             <section>
@@ -50,7 +48,7 @@ include "../espaces/bienvenu.php";
                         <label for="topo"></label>
                         <input type="textarea" id="topo" name="topo" class="form-control" placeholder="topo">
                     </div>
-                    <br>                    
+                    <br>
                     <input type="hidden" name="idEphemeride" value="<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['idEphemeride'])))) ?>">
                     <button class="submit btn btn-primary">Ajouter</button>
                 </form>
@@ -58,11 +56,13 @@ include "../espaces/bienvenu.php";
         </div>
     </main>
 </section>
+
 <?php
-}else{
-        header('Location: ../../templates/formConnexion.php');
-    }
-    ?>
+        } else {
+            header('Location: ../../templates/formConnexion.php');
+        }
+?>
+
 <?php
 include "../../footer.php";
 ?>

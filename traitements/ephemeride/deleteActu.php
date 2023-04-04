@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"]) && $user["statut"] == "Admin") {
-    header("Location: ../../templates/formConnexion.php");
-    exit(); 
-}
 
 require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/utils/utils.php');
+
+sess("Admin", "../../");
 
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
 
@@ -15,34 +15,30 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
 
     $sql = 'SELECT * FROM `Ephemeride` WHERE `idEphemeride` = :id;';
 
-    $query = $db->prepare($sql);
-    
+    $query = $db->prepare($sql);   
     $query->bindValue(':id', $id, PDO::PARAM_INT);
-
     $query->execute();
 
     $produit = $query->fetch();
 
     if(!$produit){
-        $_SESSION['erreur'] = "Cet id n'existe pas";
-        header('Location: /templates/ephemerideTemplate/gererActu.php');
-        die();
+        info("erreur", "Cet id n'existe pas");
+        redirect("../../templates/ephemerideTemplate/gererActu.php");
+        exit();
     }
 
     $sql = 'DELETE FROM `Ephemeride` WHERE `idEphemeride` = :id;';
 
-    $query = $db->prepare($sql);
-    
+    $query = $db->prepare($sql);    
     $query->bindValue(':id', $id, PDO::PARAM_INT);
-
     $query->execute();
 
-    $_SESSION['message'] = "Éphéméride supprimée";
-    header('Location: /templates/ephemerideTemplate/gererActu.php');
+    info("erreur", "Éphéméride supprimée");
+    redirect("../../templates/ephemerideTemplate/gererActu.php");
 
 }else{
-    $_SESSION['erreur'] = "URL invalide";
-    header('Location: /templates/ephemerideTemplate/gererActu.php');
+    info("erreur", "URL invalide");
+    redirect("../../templates/ephemerideTemplate/gererActu.php");
 }
 ?>
 

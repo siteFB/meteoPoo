@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/utils/utils.php');
 
 if (isset($_POST) && !empty($_POST)){        
         if(
@@ -17,9 +19,6 @@ if (isset($_POST) && !empty($_POST)){
             }  
             
             $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
- 
-//----------------------------connexion à la base ---------------
-            require_once('../../libraries/base/connexionBDD.php');
             
             $db = getPdo();
            
@@ -38,11 +37,11 @@ if (isset($_POST) && !empty($_POST)){
                         "email" => $_POST["email"],
                         "statut" => $user["statut"]
             ];            
-            header("Location: ../../templates/formConnexion.php");
+            redirect("Location: ../../templates/formConnexion.php");
               
         }else{   //Champs vides au clic
-            $_SESSION['erreur'] = "Vous devez remplir tous les champs";
-            header("Location: ../templates/index.php");
+            info("erreur", "Vous devez remplir tous les champs");
+            redirect("Location: ../../templates/index.php");
 
         }
     }
