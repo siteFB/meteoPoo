@@ -1,19 +1,26 @@
 <?php
+require_once('../../libraries/utils/utils.php');
 include "../../traitements/ephemeride/consulterMeteoTraitement.php";
 ?>
 
 <?php
 $titre = "Consulter la météo";
-$gererTitre = "Consulter l'éphéméride";
 
 include "../../layout.php";
 include "../../header.php";
 include "../espaces/bienvenu.php";
-include "../buttonBack.php";
 ?>
 <link rel="stylesheet" href="../../boot.css">
 
 <h2 class="display-5 fw-bold text-center mb-5 mt-5">Éphéméride</h2>
+<?php  // Boutons retour selon profil
+if (isset($_SESSION['user']) && $_SESSION['user']['statut'] == "Membre") {
+    buttonBack("Consulter la météo", "Membre", "/templates/espaceMembres/espaceMembre.php");
+
+} elseif (isset($_SESSION['user']) && $_SESSION['user']['statut'] == "Admin") {
+    buttonBack("Consulter la météo", "Admin", "/templates/espaceAdminister/espaceAdmin.php");
+}
+?>
 <div class="container">
     <div class="row mb-5">
         <?php

@@ -18,7 +18,7 @@ include "../../templates/espaces/bienvenu.php";
 
 <section>
 <?php
-buttonBack("Espace Administrateur", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
+buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
 ?>
     <div class="container mb-5">
         <div class="col-md-12 pb-4">

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-dark bg-dark" aria-label="First navbar example">
     <div class="container-fluid">
-        <a class="navbar-brand" href="../index.php">MÉTÉO 58</a>
+        <a class="navbar-brand" href="">MÉTÉO 58</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation" onclick="myFunction()">
             <span class="navbar-toggler-icon red"></span>
         </button>

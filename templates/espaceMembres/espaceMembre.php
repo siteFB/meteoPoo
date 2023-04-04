@@ -1,8 +1,8 @@
 <?php
 session_start();
-//si l'utilisateur n'est pas connecté il n'aura pas accès au site
-if (!isset($_SESSION["user"])) {
-    header("Location: ../templates/formConnexion.php");
+
+if(!isset($_SESSION["user"])) {
+    redirect("/templates/formConnexion.php");
     exit();
 }
 
@@ -12,8 +12,8 @@ include "../../layout.php";
 include "../../header.php";
 include "../espaces/bienvenu.php";
 ?>
-
 <link rel="stylesheet" href="../../boot.css">
+
 <h2 class="text-center pb-4 mx-4">Que souhaitez-vous faire?</h2>
 
 <?php

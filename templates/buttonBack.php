@@ -14,7 +14,7 @@
             echo "    
             <div>
             <button type='button' class='btn btn-success'><a class='text-white' href='../espaceAdminister/espaceAdmin.php'>Retour</a></button>
-        </div>
+            </div>
                ";
         }
     }
