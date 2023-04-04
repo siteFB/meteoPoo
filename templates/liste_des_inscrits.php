@@ -1,4 +1,6 @@
 <?php
+require_once('../libraries/sessions/sessionChoice.php');
+require_once('../libraries/utils/utils.php');
 include "../traitements/inscrits/voirInscrits.php";
 ?>
 
@@ -13,19 +15,10 @@ include "../templates/espaces/bienvenu.php";
 <link rel="stylesheet" href="../../boot.css">
 
 <section>
-  <span class="d-flex justify-content-center">
-    <h2 class="text-center mt-5 mb-5 text-primary"><?php echo strip_tags(stripslashes(htmlentities(trim($gererTitre)))) ?></h2>
-    <?php
-
-    if (isset($_SESSION["user"]) && ($_SESSION["user"]["statut"] == "Admin")) {
-
-      echo "
-        <div>
-            <button type='button' class='btn btn-success mx-5 mt-5 '><a class='text-white' href='/templates/espaceAdminister/espaceAdmin.php'>Retour</a></button>
-        </div>
-               ";
-    ?>
-  </span>
+  <?php
+  sess("Admin", "../../");
+  buttonBack("Liste des inscrits", "Admin", "/templates/espaceAdminister/espaceAdmin.php");
+  ?>
 
   <div class="container mb-5">
     <div class="table-responsive">
@@ -63,12 +56,6 @@ include "../templates/espaces/bienvenu.php";
     </div>
   </div>
 </section>
-
-<?php
-    } else {
-      header('Location: ../../templates/formConnexion.php');
-    }
-?>
 
 <?php
 include "../footer.php";

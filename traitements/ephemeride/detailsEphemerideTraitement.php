@@ -5,7 +5,7 @@ require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 
-if (isset($_SESSION["user"])){
+if (isset($_SESSION["user"]["statut"])){
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
     
     $db = getPdo();

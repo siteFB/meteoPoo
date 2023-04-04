@@ -18,7 +18,7 @@ include "../../templates/espaces/bienvenu.php";
 
 <section>
 <?php
-buttonBack("Espace Membre", "Membre", "/templates/espaceMembres/espaceMembre.php", "../../templates/formConnexion.php");
+buttonBack("Espace messagerie", "Membre", "/templates/espaceMembres/espaceMembre.php", "../../templates/formConnexion.php");
 ?>
     <div class="container mb-5">
         <div class="col-md-12 pb-4">

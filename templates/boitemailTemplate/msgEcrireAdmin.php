@@ -5,7 +5,6 @@ include "../../traitements/boitemail/ecrireAdmin.php";
 
 <?php
 $titre = "Espace administrateur";
-$gererTitre = "Espace messagerie";
 
 include "../../layout.php";
 include "../../header.php";
@@ -19,7 +18,7 @@ include "../../templates/espaces/bienvenu.php";
 
 <section class="mb-5">
 <?php
-buttonBack("Espace Administrateur", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
+buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
 ?>
     <div class="container col-xl-10 col-xxl-12 pt-2 pb-4">
         <div class="row align-items-center py-3 bg-white border border-muted rounded">

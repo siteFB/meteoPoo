@@ -1,20 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION["user"])) {
-    header("Location: ../templates/formConnexion.php");
-    die();
-}
+require_once('../../libraries/utils/utils.php');
 
 $titre = "Espace membre";
-$gererTitre = "Modifier mon profil";
 
 include "../../layout.php";
 include "../../header.php";
 include "../espaces/bienvenu.php";
-include "../buttonBack.php";
 ?>
-
 <link rel="stylesheet" href="../../boot.css">
+
+<?php
+buttonBack("Modifier mon profil", "Membre", "/templates/espaceMembres/espaceMembre.php");
+?>
 <div class="container mt-4 mb-5">
     <div class="text-center darken-grey-text mb-4">
         <table class="table">
