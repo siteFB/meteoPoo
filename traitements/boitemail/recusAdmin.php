@@ -7,7 +7,6 @@ require_once('../../libraries/base/deconnexionBDD.php');
 
 sess("Admin", "../../");
 
-
 if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
 
     $id_destinataire = strip_tags($_SESSION['user']['id']);
@@ -18,7 +17,5 @@ if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
 if ($msg_nbr == 0) {
     $_SESSION['message'] = "Vous n'avez aucun message";
 }
-
-
 ?>
 

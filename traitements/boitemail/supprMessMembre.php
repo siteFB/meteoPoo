@@ -22,8 +22,8 @@ if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
 
     info("message", "Message supprimé");
     redirect("../../templates/boitemailTemplate/msgRecusMembre.php");
-
 } else {
     info("erreur", "URL invalide");
     redirect("../../templates/boitemailTemplate/msgRecusMembre.php");
 }
+?>

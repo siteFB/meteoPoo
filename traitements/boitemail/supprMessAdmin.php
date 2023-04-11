@@ -17,12 +17,11 @@ if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
         info("erreur", "Cet id n'existe pas");
         redirect("../../templates/boitemailTemplate/msgRecusAdmin.php");
     }
-    
+
     deleteMess($id);
 
     info("message", "Message supprimé");
     redirect("../../templates/boitemailTemplate/msgRecusAdmin.php");
-
 } else {
     info("erreur", "URL invalide");
     redirect("../../templates/boitemailTemplate/msgRecusAdmin.php");
