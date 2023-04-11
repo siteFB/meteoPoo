@@ -7,21 +7,14 @@ require_once('../../libraries/base/deconnexionBDD.php');
 
 sess("Membre", "../../");
 
-$db = getPdo();
-
 if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
 
     $id_destinataire = strip_tags($_SESSION['user']['id']);
 
-$msg = $db->prepare("SELECT * FROM `messagerie`
-                     WHERE `id_destinataire` = :id_destinataire
-                     ORDER BY dateMess
-                     DESC
-                     ");
+    [$msg, $msg_nbr] = readAllMess($id_destinataire);
+}
 
-    $msg->bindValue(':id_destinataire', $id_destinataire, PDO::PARAM_INT);
-
-    $msg->execute();
-    $msg_nbr = $msg->rowCount();  
-} 
+if ($msg_nbr == 0) {
+    $_SESSION['message'] = "Vous n'avez aucun message";
+}
 ?>

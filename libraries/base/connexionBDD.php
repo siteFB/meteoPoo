@@ -24,11 +24,10 @@ function getPdo(): PDO
     };
 }
 
-/*  Inscrits  */
+/*----------------------------------------------------------les inscrits----------------------------------------------------*/
 
 /**
  * Return la liste des inscrits: visible pour l'admin (read only, here)
- * 
  */
 function seeInscrits()
 {
@@ -41,11 +40,55 @@ function seeInscrits()
     return $result;
 }
 
-/*  Éphéméride  */
+/*---------------------------------------------------------l'éphéméride---------------------------------------------------------*/
 
 /**
- * Return CRUD éphéméride: modifier
- * 
+ * Return CRUD éphéméride: create
+ */
+function addEphemeride(string $imgTemps, string $titre, string $topo)
+{
+    $db = getPdo();
+    $sql = 'INSERT INTO `ephemeride`(`imgTemps`, `titre`, `topo`) VALUES (:imgTemps, :titre, :topo);';
+    $query = $db->prepare($sql);
+    $query->bindValue(':imgTemps', $imgTemps, PDO::PARAM_STR);
+    $query->bindValue(':titre', $titre, PDO::PARAM_STR);
+    $query->bindValue(':topo', $topo, PDO::PARAM_STR);
+
+    $query->execute();
+}
+
+
+/**
+ * Afficher toutes les éphémérides: read
+ */
+function showActu()
+{
+    $db = getPdo();
+    $sql = 'SELECT * FROM `ephemeride`';
+    $query = $db->prepare($sql);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+    return $result;
+}
+
+/**
+ * Afficher le détail d'une seule éphéméride: read
+ */
+function showOneActu(int $id)
+{
+    $db = getPdo();
+    $sql = 'SELECT * FROM `Ephemeride` WHERE `idEphemeride` = :id;';
+    $query = $db->prepare($sql);
+    $query->bindValue(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+    $produit = $query->fetch();
+
+    return $produit;
+}
+
+/**
+ * Return CRUD éphéméride: upload
  */
 function modifierActu(int $id, string $image, string $titre, string $topo)
 {
@@ -61,39 +104,7 @@ function modifierActu(int $id, string $image, string $titre, string $topo)
 }
 
 /**
- * Afficher toutes les éphémérides: read
- * 
- */
-function showActu()
-{
-    $db = getPdo();
-    $sql = 'SELECT * FROM `ephemeride`';
-    $query = $db->prepare($sql);
-    $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    return $result;
-}
-
-/**
- * Afficher le détail d'une seule éphéméride: read
- * 
- */
-function showOneActu(int $id)
-{
-    $db = getPdo();
-    $sql = 'SELECT * FROM `Ephemeride` WHERE `idEphemeride` = :id;';
-    $query = $db->prepare($sql);
-    $query->bindValue(':id', $id, PDO::PARAM_INT);
-    $query->execute();
-    $produit = $query->fetch();
-
-    return $produit;
-}
-
-/**
  * Return CRUD éphéméride: delete
- * 
  */
 function deleteEphemeride(int $id): void
 {
@@ -104,43 +115,39 @@ function deleteEphemeride(int $id): void
     $query->execute();
 }
 
+/*-----------------------------------------------------la messagerie interne---------------------------------------------*/
 
-/**
- * Return CRUD éphéméride: create
- * 
+/** 
+ * Récupérer le pseudo et l'id du destinataire
  */
-function addEphemeride(string $imgTemps, string $titre, string $topo)
+function pseudoDest(string $destinataire)
 {
     $db = getPdo();
-    $sql = 'INSERT INTO `ephemeride`(`imgTemps`, `titre`, `topo`) VALUES (:imgTemps, :titre, :topo);';
-    $query = $db->prepare($sql);
-    $query->bindValue(':imgTemps', $imgTemps, PDO::PARAM_STR);
-    $query->bindValue(':titre', $titre, PDO::PARAM_STR);
-    $query->bindValue(':topo', $topo, PDO::PARAM_STR);
+            $id_destinataire = $db->prepare('SELECT idUser FROM users WHERE pseudo = :destinataire');
+            $id_destinataire->bindValue(':destinataire', $destinataire, PDO::PARAM_STR);
+            $id_destinataire->execute();
 
-    $query->execute();
+            return $id_destinataire;
 }
 
-/*  Messages box */
-
-/**
- * Récupérer et afficher un seul message
- * 
+/** 
+ * Envoyer un message: stocker dans la BDD
  */
-function oneMess(int $id)
+function sendMess(int $id_destinataire, string $titreMessage, string $mesage)
 {
     $db = getPdo();
-    $requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
-    $requete->bindValue(':id', $id, PDO::PARAM_INT);
-    $requete->execute();
-    $resultat = $requete->fetch();
+    $ins = $db->prepare('INSERT INTO messagerie(id_expediteur, id_destinataire, titreMessage, mesage)
+    VALUES (:id_expediteur, :id_destinataire, :titreMessage, :mesage)');
 
-    return $resultat;
+$ins->bindValue(':id_expediteur', $_SESSION['user']['id'], PDO::PARAM_INT);
+$ins->bindValue(':id_destinataire', $id_destinataire, PDO::PARAM_INT);
+$ins->bindValue(':titreMessage', $titreMessage, PDO::PARAM_STR);
+$ins->bindValue(':mesage', $mesage, PDO::PARAM_STR);
+$ins->execute();
 }
 
 /**
- * Récupérer et compter et ranger par date tous les messages reçus
- * 
+ * Récupérer et compter et ranger par date et lire tous les messages reçus
  */
 function readAllMess(int $id_destinataire)
 {
@@ -161,26 +168,22 @@ function readAllMess(int $id_destinataire)
 return [$msg, $msg_nbr];
 }
 
-
-
 /**
- * Supprimer un message
- * 
+ * Récupérer et afficher un seul message
  */
-function deleteMess(int $id)
+function oneMess(int $id)
 {
     $db = getPdo();
-    $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
-    $requete = $db->prepare($sql);
+    $requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
     $requete->bindValue(':id', $id, PDO::PARAM_INT);
     $requete->execute();
+    $resultat = $requete->fetch();
 
-    
+    return $resultat;
 }
 
 /** 
  * Lire et compter tous les messages d'un seul destinataire
- * 
  */
 function readOneMess(int $id, int $id_destinataire)
 {
@@ -202,19 +205,14 @@ function readOneMess(int $id, int $id_destinataire)
     return [$msg_nbr, $resultat];
 }
 
-/** 
- * Récupérer le pseudo et l'id du destinataire
- * 
+/**
+ * Supprimer un message
  */
-function pseudoDest(string $destinataire)
+function deleteMess(int $id)
 {
     $db = getPdo();
-            $id_destinataire = $db->prepare('SELECT idUser FROM users WHERE pseudo = :destinataire');
-            $id_destinataire->bindValue(':destinataire', $destinataire, PDO::PARAM_STR);
-            $id_destinataire->execute();
-
-
+    $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
+    $requete = $db->prepare($sql);
+    $requete->bindValue(':id', $id, PDO::PARAM_INT);
+    $requete->execute();   
 }
-
-
-?>
