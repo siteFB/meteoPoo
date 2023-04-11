@@ -1,14 +1,45 @@
 <?php
-function info(string $sort, string $show) // show message or erreur
+
+/**
+ * Return a message after click
+ * 
+ * @return MESSAGE
+ */
+function info(string $sort, string $show)
 {
     $_SESSION["$sort"] = "$show";
 }
 
+/**
+ * Colored message according to type message
+ * 
+ * @return COLORED_MESSAGE
+ */
+function colorMess(string $sort, string $color)
+{
+    if(isset($_SESSION["$sort"]) && !empty($_SESSION["$sort"])){
+        ?><div class='alert alert-<?php echo "$color" ?>' role='alert'><?php echo $_SESSION[$sort] ?></div>
+        <?php ; 
+        $_SESSION["$sort"] = "";
+    }
+}
+
+/**
+ * Redirection
+ * 
+ * @return REDIRECTION
+ */
 function redirect(string $url):void  // return vide
 {
     header("Location: $url");
+    exit();
 }
 
+/**
+ * Button for back according to role
+ * 
+ * @return BUTTON/BACK
+ */
 function buttonBack(string $gererTitre, string $role, string $url1):void
 {
     ?>

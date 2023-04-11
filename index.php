@@ -1,4 +1,5 @@
 <?php
+require_once('libraries/utils/utils.php');
 include "traitements/ephemeride/ephemerideActusTraitement.php";
 ?>
 <?php
@@ -26,10 +27,7 @@ include "templates/inscription.php";
 <!--------- Contacts ---------->
 <section>
     <?php
-    if (!empty($_SESSION['erreur'])) {
-        echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-        $_SESSION['erreur'] = "";
-    }
+    if(colorMess("erreur", "danger"));
     ?>
 
     <div class="container bg-light col-xl-10 col-xxl-12 pt-2">
@@ -44,7 +42,7 @@ include "templates/inscription.php";
                     </div>
                     <div class="form-outline">
                         <label class="form-label" for="form4Example1">à</label>
-                        <input type="text" class="form-control bg-light" placeholder="Matéo"/>
+                        <input type="text" class="form-control bg-light" placeholder="Matéo" />
                     </div>
                     <div class="form-outline">
                         <label class="form-label" for="form4Example1">Titre</label>

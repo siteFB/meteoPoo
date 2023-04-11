@@ -17,16 +17,9 @@ include "../espaces/bienvenu.php";
     ?>
     <div class="container mb-5" id="actuE23">
         <?php
-            if (!empty($_SESSION['erreur'])) {
-                echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                $_SESSION['erreur'] = "";
-            }
-        ?>
-        <?php
-            if (!empty($_SESSION['message'])) {
-                echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                $_SESSION['message'] = "";
-            }
+        if (colorMess("erreur", "danger")) {
+        } elseif (colorMess("message", "success")) {
+        };
         ?>
         <section>
             <div class="container mt-5">

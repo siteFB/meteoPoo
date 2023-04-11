@@ -6,12 +6,8 @@ require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 
 if (isset($_SESSION["user"]["statut"])){
-$db = getPdo();
 
-$sql = 'SELECT * FROM `ephemeride`';
-$query = $db->prepare($sql);
-$query->execute();
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
+$result = showActu();
 
 $db = deco();
 

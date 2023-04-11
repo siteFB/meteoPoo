@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="../../boot.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
 
-<section>
-    <h2 class="display-5 fw-bold text-center mt-5 mb-5">Éphéméride</h2>
+<section class="mt-4">>
+    <h2 class="display-5 fw-bold text-center mt-4 mb-5">Éphéméride</h2>
     <div class="container">
         <div class="row mb-5">
             <?php

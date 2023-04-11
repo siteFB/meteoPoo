@@ -18,16 +18,15 @@ include "../espaces/bienvenu.php";
     <main class="container mb-5 w-25" id="actuE23">
         <div>
             <section>
-                <?php
-                if (!empty($_SESSION['erreur'])) {
-                    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                    $_SESSION['erreur'] = "";
-                }
+            <?php
+                if (colorMess("erreur", "danger")) {
+                } elseif (colorMess("message", "success")) {
+                };
                 ?>
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="imgTemps"></label>
-                        <input type="file" id="imgTemps" name="imgTemps" class="form-control mb-2" value="../../images/'<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride["imgTemps"])))) ?>" accept="image/png, image/jpeg, image/jpg">
+                        <input type="file" id="imgTemps" name="imgTemps" class="form-control mb-2" value="../../images/'<?php echo strip_tags(stripslashes(htmlentities(trim($produit["imgTemps"])))) ?>" accept="image/png, image/jpeg, image/jpg">
                     </div>
                     <div>
                         <div>
@@ -36,15 +35,15 @@ include "../espaces/bienvenu.php";
                         </div>
                         <div class="form-group">
                             <label for="titre">Titre</label>
-                            <input type="text" id="titre" name="titre" class="form-control mb-4" placeholder="Titre" value="<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride["titre"])))) ?>">
+                            <input type="text" id="titre" name="titre" class="form-control mb-4" placeholder="Titre" value="<?php echo strip_tags(stripslashes(htmlentities(trim($produit["titre"])))) ?>">
                         </div>
                         <div class="form-group">
                             <label for="topo">Topo</label>
-                            <input type="textarea" placeholder="Topo" id="topo" name="topo" class="form-control mb-4" placeholder="Topo" value="<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride["topo"])))) ?>">
+                            <input type="textarea" placeholder="Topo" id="topo" name="topo" class="form-control mb-4" placeholder="Topo" value="<?php echo strip_tags(stripslashes(htmlentities(trim($produit["topo"])))) ?>">
                         </div>
                     </div>
                     <br>
-                    <input type="hidden" name="idEphemeride" value="<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['idEphemeride'])))) ?>">
+                    <input type="hidden" name="idEphemeride" value="<?php echo strip_tags(stripslashes(htmlentities(trim($produit['idEphemeride'])))) ?>">
                     <button class="btn btn-primary">Modifier</button>
                 </form>
             </section>

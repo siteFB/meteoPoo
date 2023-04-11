@@ -27,16 +27,7 @@ if ($_POST) {
         $size = $_FILES['imgTemps']['size'];
         $error = $_FILES['imgTemps']['error'];
     
-        $sql = 'UPDATE `ephemeride` SET `imgTemps`=:imgTemps, `titre`=:titre, `topo`=:topo WHERE `idEphemeride`=:id;';
-
-        $query = $db->prepare($sql);
-
-        $query->bindValue(':id', $id, PDO::PARAM_INT);
-        $query->bindValue(':imgTemps', $image, PDO::PARAM_STR);
-        $query->bindValue(':titre', $titre, PDO::PARAM_STR);
-        $query->bindValue(':topo', $topo, PDO::PARAM_STR);
-
-        $query->execute();
+        modifierActu($id, $image, $titre, $topo);
 
 // Upload de l'image et vérifier chaque clé: name, type, fichier temp, error et taille
 if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
@@ -49,7 +40,7 @@ if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
             $size = filesize($_FILES['imgTemps']['tmp_name']);  //taille
             if($size > 10000){
                 info("erreur", "L'image ne doit pas dépasser 10ko");
-
+                redirect("/templates/ephemerideTemplate/modifierActu.php");
                 }else{
 
                 // Nettoyer le fichier, sécurité
@@ -68,23 +59,25 @@ if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
                 // Définitif         
                 $moveIsOk = move_uploaded_file($_FILES['imgTemps']['tmp_name'], $cheminDeDestination);
                     if ($moveIsOk) {
-                        $message = "Image déplacée avec succès";
                         info("message", "Image déplacée avec succès");
+                        redirect("/templates/ephemerideTemplate/gererActu.php");
                         } else {
-                             $message = 'echec, l\'image n\'a pas pu être déplacée';
+                            info("erreur", "echec, l\'image n\'a pas pu être déplacée");
+                            redirect("/templates/ephemerideTemplate/modifierActu.php");
                                 }
                 }
-}else{
-    info("erreur", "Utiliser un format accepté: png, jpeg ou jpg");
-}
-
-   } else {
-        info("erreur", "Un problème a eu lieu lors de l'upload");
-    }
-
-} else {
-    info("erreur", "Aucune image à télécharger");
-}
+                } else {
+                    info("erreur", "Utiliser un format accepté: png, jpeg ou jpg");
+                    redirect("/templates/ephemerideTemplate/modifierActu.php");
+                }
+            } else {
+                info("erreur", "Un problème a eu lieu lors de l'upload");
+                redirect("/templates/ephemerideTemplate/modifierActu.php");
+            }
+        } else {
+            info("erreur", "Aucune image à télécharger");
+            redirect("/templates/ephemerideTemplate/modifierActu.php");
+        }
 
 //Renommer l'image et envoi
 $cheminEtNomTemporaire = $_FILES['imgTemps']['tmp_name'];
@@ -99,40 +92,31 @@ $moveIsOk = move_uploaded_file($cheminEtNomTemporaire, $cheminEtNomDefinitif);
 
 if ($moveIsOk) {
     info("message", "L'image est uploadée");
+    redirect("/templates/ephemerideTemplate/gererActu.php");
     
 } else {
     info("erreur", "Échec de l\'upload");
+    redirect("/templates/ephemerideTemplate/modifierActu.php");
 }
         info("message", "L'éphéméride est modifiée");
         $db = deco();  
-
         redirect("/templates/ephemerideTemplate/gererActu.php");
 
     } else {
         info("erreur", "Le formulaire est incomplet");
+        redirect("/templates/ephemerideTemplate/modifierActu.php");
     }
 }
 
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
+    $id = strip_tags(stripslashes(htmlentities(trim($_GET['idEphemeride']))));
+    $produit = showOneActu($id);
 
-    $db = getPdo();    
-
-    $id = strip_tags($_GET['idEphemeride']);
-
-    $sql = 'SELECT * FROM `ephemeride` WHERE `idEphemeride`=:id';
-
-    $query = $db->prepare($sql);
-    $query->bindValue(':id', $id, PDO::PARAM_INT);
-    $query->execute();
-
-    $ephemeride = $query->fetch();
-
-    if (!$ephemeride) {
+    if (!$produit) {
         info("erreur", "Cette éphéméride n'existe pas");
         redirect("/templates/ephemerideTemplate/gererActu.php");
     }
     
 } else {
-    info("erreur","URL invalide");
     redirect("/templates/ephemerideTemplate/gererActu.php");
 }

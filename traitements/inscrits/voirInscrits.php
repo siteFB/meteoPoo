@@ -7,12 +7,7 @@ require_once('../libraries/base/deconnexionBDD.php');
 
 sess("Admin", "../");
 
-$db = getPdo();
-
-$sql = 'SELECT * FROM `users`';
-$query = $db->prepare($sql);
-$query->execute();
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
+$result = seeInscrits();
 
 $db = deco();
 

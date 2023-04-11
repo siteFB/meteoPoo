@@ -1,8 +1,10 @@
 <?php
 $titre = "Connexion";
 
+require_once('../libraries/utils/utils.php');
 include "../layout.php";
 include "../header.php";
+
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
@@ -12,10 +14,7 @@ include "../header.php";
     <div class="align-items-center g-5 py-3">
         <div class="col-10 mx-auto col-lg-5 p-4">
             <?php
-            if (!empty($_SESSION['erreur'])) {
-                echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                $_SESSION['erreur'] = "";
-            }
+            if(colorMess("erreur", "danger"));
             ?>
             <form action="/traitements/connection/traiterConnexion.php" method="POST" class="p-5 border rounded-3 bg-light mt-4 mb-5">
                 <div class="form-floating mb-3">

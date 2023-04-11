@@ -13,25 +13,14 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
 
     $id = strip_tags(stripslashes(htmlentities(trim($_GET['idEphemeride']))));
 
-    $sql = 'SELECT * FROM `Ephemeride` WHERE `idEphemeride` = :id;';
-
-    $query = $db->prepare($sql);   
-    $query->bindValue(':id', $id, PDO::PARAM_INT);
-    $query->execute();
-
-    $produit = $query->fetch();
+    $produit = showOneActu($id);
 
     if(!$produit){
         info("erreur", "Cet id n'existe pas");
         redirect("../../templates/ephemerideTemplate/gererActu.php");
-        exit();
     }
 
-    $sql = 'DELETE FROM `Ephemeride` WHERE `idEphemeride` = :id;';
-
-    $query = $db->prepare($sql);    
-    $query->bindValue(':id', $id, PDO::PARAM_INT);
-    $query->execute();
+    deleteEphemeride($id);
 
     info("erreur", "Éphéméride supprimée");
     redirect("../../templates/ephemerideTemplate/gererActu.php");

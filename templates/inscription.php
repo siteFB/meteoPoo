@@ -1,3 +1,6 @@
+<?php
+require_once('libraries/utils/utils.php');
+?>
 <section>
     <div class="container col-xl-10 col-xxl-8 pt-2 my-3">
         <div class="row align-items-center g-5 py-3">
@@ -5,10 +8,7 @@
                 <h2 class="display-4 fw-bold lh-1 mb-3">Inscription</h2>
                 <!-------------------- En cas de champs vides au clic ------------------>
                 <?php
-                if (!empty($_SESSION['erreur'])) {
-                    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                    $_SESSION['erreur'] = "";
-                }
+                if (colorMess("erreur", "danger"));
                 ?>
                 <!---->
                 <p class="lead col-lg-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.

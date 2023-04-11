@@ -14,8 +14,6 @@ if ($_POST) {
         && isset($_POST['topo']) && !empty($_POST['topo'])
     ) {
 
-        $db = getPdo();
-
         $imgTemps = strip_tags(stripslashes(htmlentities(trim($_POST['imgTemps']))));
         $titre = strip_tags(stripslashes(htmlentities(trim($_POST['titre']))));
         $topo = strip_tags(stripslashes(htmlentities(trim($_POST['topo']))));
@@ -25,15 +23,7 @@ if ($_POST) {
         $destination = "../../images/" . $image;
         move_uploaded_file($tmp_name, $destination);
 
-        $sql = 'INSERT INTO `ephemeride`(`imgTemps`, `titre`, `topo`) VALUES (:imgTemps, :titre, :topo);';
-
-        $query = $db->prepare($sql);
-
-        $query->bindValue(':imgTemps', $imgTemps, PDO::PARAM_STR);
-        $query->bindValue(':titre', $titre, PDO::PARAM_STR);
-        $query->bindValue(':topo', $topo, PDO::PARAM_STR);
-
-        $query->execute();
+        addEphemeride($imgTemps, $titre, $topo);
 
         $_SESSION["ephemeride"] = [
             "id" => strip_tags(stripslashes(htmlentities(trim($ephemeride["idEphemeride"])))),
@@ -43,7 +33,6 @@ if ($_POST) {
         ];
 
         info("message", "L'éphéméride' est ajoutée");
-
         $db = deco(); 
         redirect("/templates/ephemerideTemplate/gererActu.php");
         

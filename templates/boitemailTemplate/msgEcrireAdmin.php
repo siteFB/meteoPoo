@@ -17,9 +17,9 @@ include "../../templates/espaces/bienvenu.php";
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <section class="mb-5">
-<?php
-buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
-?>
+    <?php
+    buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
+    ?>
     <div class="container col-xl-10 col-xxl-12 pt-2 pb-4">
         <div class="row align-items-center py-3 bg-white border border-muted rounded">
             <!----------------------------- Actions -------------------------->
@@ -37,16 +37,9 @@ buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmi
             <!----------------------------- Formulaire ----------------------------->
             <div class="bg-light border border-muted rounded col-10 mx-auto col-lg-7 pt-3 pb-4 mt-4 mb-4">
                 <?php
-                if (!empty($_SESSION['erreur'])) {
-                    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                    $_SESSION['erreur'] = "";
-                }
-                ?>
-                <?php
-                if (!empty($_SESSION['message'])) {
-                    echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                    $_SESSION['message'] = "";
-                }
+                if (colorMess("erreur", "danger")) {
+                } elseif (colorMess("message", "success")) {
+                };
                 ?>
                 <form action="" method="POST">
                     <div class="wrapinput">
@@ -56,7 +49,7 @@ buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmi
                         <input class="inputm border border-muted rounded w-100 fs-6 fw-bold px-4 py-1 mb-2" type="text" name="titreMessage" placeholder="Sujet:">
                     </div>
                     <div class="wrapinput">
-                        <textarea class="inputm border border-muted rounded w-100 px-4 pt-1 pb-5 fs-6 fw-bold" name="message" placeholder="Message"></textarea>
+                        <textarea class="inputm border border-muted rounded w-100 px-4 pt-1 pb-5 fs-6 fw-bold" name="mesage" placeholder="Message"></textarea>
                     </div>
                     <div class="containerbutton w-100 d-flex-wrap justify-content-center pt-4">
                         <button class="w-100 h-100 p-3 fs-5 text-white rounded" style="background-color:#846add" name="envoimessage">

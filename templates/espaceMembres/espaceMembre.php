@@ -3,7 +3,6 @@ session_start();
 
 if(!isset($_SESSION["user"])) {
     redirect("/templates/formConnexion.php");
-    exit();
 }
 
 $titre = "Espace membre";
