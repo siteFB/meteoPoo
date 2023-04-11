@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Return a database disconnect
+ * 
+ * @return NULL
+ */
 function deco()
 {
 

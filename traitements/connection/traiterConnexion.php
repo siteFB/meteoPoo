@@ -10,8 +10,7 @@ if (isset($_POST) && !empty($_POST)) {
     if (
         isset($_POST["email"], $_POST["pass"])
         && !empty($_POST["email"] && !empty($_POST["pass"]))
-    ) {
-        
+    ) {      
         $db = getPdo(); 
 
         $connexionCompte = $db->prepare("SELECT * FROM `users` WHERE `email`= :email");
@@ -65,9 +64,8 @@ if (isset($_POST) && !empty($_POST)) {
         }
     }
 
-//Redirection si le bouton n'est pas utilisé  
+// Bouton obligatoire
 }else{
     redirect("../../templates/formConnexion.php");
-    exit(); 
 }
 ?>

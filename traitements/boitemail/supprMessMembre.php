@@ -9,28 +9,16 @@ require_once('../../libraries/utils/utils.php');
 sess("Membre", "../../");
 
 if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
-
-    $db = getPdo();
-
     $id = strip_tags($_GET['idUser']);
 
-    $requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
-    $requete->bindValue(':id', $id, PDO::PARAM_INT);
-    $requete->execute();
-
-    $resultat = $requete->fetch();
+    $resultat = oneMess($id);
 
     if (!$resultat) {
         info("erreur", "Cet id n'existe pas");
-        redirect("../../templates/boitemailTemplate/msgRecusMembre.php");   
-        exit();
+        redirect("../../templates/boitemailTemplate/msgRecusMembre.php");
     }
 
-    $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
-
-    $requete = $db->prepare($sql);
-    $requete->bindValue(':id', $id, PDO::PARAM_INT);
-    $requete->execute();
+    deleteMess($id);
 
     info("message", "Message supprimé");
     redirect("../../templates/boitemailTemplate/msgRecusMembre.php");

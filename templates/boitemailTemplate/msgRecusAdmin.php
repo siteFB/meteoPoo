@@ -1,4 +1,5 @@
 <?php
+require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 include "../../traitements/boitemail/recusAdmin.php";
 ?>
@@ -17,9 +18,9 @@ include "../../templates/espaces/bienvenu.php";
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <section>
-<?php
-buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
-?>
+    <?php
+    buttonBack("Espace Administrateur", "Admin", "/templates/espaceAdminister/espaceAdmin.php", "../../templates/formConnexion.php");
+    ?>
     <div class="container mb-5">
         <div class="col-md-12 pb-4">
             <div>
@@ -34,38 +35,25 @@ buttonBack("Espace messagerie", "Admin", "/templates/espaceAdminister/espaceAdmi
                     </div>
                     <div class="col-md-9 my-5 bg-light p-3">
                         <?php
-                        if (!empty($_SESSION['erreur'])) {
-                            echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                            $_SESSION['erreur'] = "";
-                        }
-                        ?>
-                        <?php
-                        if (!empty($_SESSION['message'])) {
-                            echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                            $_SESSION['message'] = "";
-                        }
+                        if (colorMess("erreur", "danger")) {
+                        } elseif (colorMess("message", "success")) {
+                        };
                         ?>
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
+                                <tbody>
                                     <?php
-                                    if ($msg_nbr == 0) {
-                                        $_SESSION['message'] = "Vous n'avez aucun message";
-                                    }
                                     while ($m = $msg->fetch()) {
-                                        $p_exp = $db->prepare('SELECT pseudo FROM users WHERE idUser= ?');
-                                        $p_exp->execute(array($m['id_expediteur']));
-                                        $p_exp = $p_exp->fetch();
-                                        $p_exp = $p_exp['pseudo'];
                                     ?>
                                         <tr>
-                                            <td class="fs-5"><?php echo "$p_exp"; ?></td>
-                                            <td><a class="fs-5" href="/templates/boitemailTemplate/msgDetailsAdmin.php?idUser=<?php echo $m['id_expediteur']; ?>"><?php echo $m['titreMessage']; ?></a></td>
+                                            <th class="fs-5"><?php echo $m['pseudo']; ?></th>
+                                            <td><a class="fs-5" href=" msgDetailsAdmin.php?idUser=<?php echo $m['id_expediteur']; ?>"><?php echo $m['titreMessage']; ?></a></td>
                                             <td class="time"><?php echo $m['dateMess']; ?></td>
                                             <td><a class="fs-5 text-secondary" onclick="return confirm('Voulez-vous supprimer ce message?')" href="/traitements/boitemail/supprMessAdmin.php?idUser=<?php echo $m['idMessagerie']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                                         </tr>
-                                    <?php
-                                    }
+                                    <?php 
+                                    } 
                                     ?>
                                 </tbody>
                             </table>

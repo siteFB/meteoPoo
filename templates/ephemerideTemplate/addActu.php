@@ -19,11 +19,10 @@ include "../espaces/bienvenu.php";
     <main class="container mb-5 w-25" id="actuE23">
         <div>
             <section>
-                <?php
-                if (!empty($_SESSION['erreur'])) {
-                    echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                    $_SESSION['erreur'] = "";
-                }
+            <?php
+                if (colorMess("erreur", "danger")) {
+                } elseif (colorMess("message", "success")) {
+                };
                 ?>
                 <form action="/traitements/ephemeride/addActuTraitement.php" method="post">
                     <div class="form-group">

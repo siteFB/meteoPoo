@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Return the role if connect, Otherwise redirect
+ * 
+ * @return SESSION/ROLE
+ */
 function sess(string $role, string $path)
 {
 

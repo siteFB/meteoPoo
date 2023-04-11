@@ -6,7 +6,6 @@ include "../traitements/inscrits/voirInscrits.php";
 
 <?php
 $titre = "Espace administrateur/Liste des inscrits";
-$gererTitre = "Liste des inscrits";
 
 include "../layout.php";
 include "../header.php";

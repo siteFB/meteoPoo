@@ -37,12 +37,11 @@ if (isset($_POST) && !empty($_POST)){
                         "email" => $_POST["email"],
                         "statut" => $user["statut"]
             ];            
-            redirect("Location: ../../templates/formConnexion.php");
+            redirect("../../templates/formConnexion.php");
               
         }else{   //Champs vides au clic
             info("erreur", "Vous devez remplir tous les champs");
-            redirect("Location: ../../templates/index.php");
-
+            redirect("../../templates/index.php");
         }
     }
 ?>

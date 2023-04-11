@@ -17,9 +17,9 @@ include "../../templates/espaces/bienvenu.php";
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <section>
-<?php
-buttonBack("Espace messagerie", "Membre", "/templates/espaceMembres/espaceMembre.php", "../../templates/formConnexion.php");
-?>
+    <?php
+    buttonBack("Espace messagerie", "Membre", "/templates/espaceMembres/espaceMembre.php", "../../templates/formConnexion.php");
+    ?>
     <div class="container mb-5">
         <div class="col-md-12 pb-4">
             <div>
@@ -35,16 +35,9 @@ buttonBack("Espace messagerie", "Membre", "/templates/espaceMembres/espaceMembre
                     </div>
                     <div class="bg-light border border-muted rounded col-10 mx-auto col-lg-7 pt-4 pb-2 mt-4 mb-4">
                         <?php
-                        if (!empty($_SESSION['erreur'])) {
-                            echo '<div class="alert alert-danger" role="alert">' . $_SESSION['erreur'] . '</div>';
-                            $_SESSION['erreur'] = "";
-                        }
-                        ?>
-                        <?php
-                        if (!empty($_SESSION['message'])) {
-                            echo '<div class="alert alert-success" role="alert">' . $_SESSION['message'] . '</div>';
-                            $_SESSION['message'] = "";
-                        }
+                        if (colorMess("erreur", "danger")) {
+                        } elseif (colorMess("message", "success")) {
+                        };
                         ?>
                         <div>
                             <div class="wrapinput mb-5">
