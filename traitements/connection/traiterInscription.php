@@ -2,6 +2,9 @@
 session_start();
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+require_once('../../libraries/models/Inscription.php');
+
+$model = new Inscription();
 
 if (isset($_POST) && !empty($_POST)){        
         if(
@@ -18,16 +21,11 @@ if (isset($_POST) && !empty($_POST)){
                 die("L'adresse mail est invalide");
             }  
             
-            $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
-            
-            $db = getPdo();
-           
-            $recupNouvelEntree = $db->prepare(" INSERT INTO `users`(`pseudo`,`email`,`pass`)
-            VALUES (:pseudo, :email, '$pass')");  
+            $email = htmlentities($_POST["email"]);
 
-            $recupNouvelEntree->bindValue(':pseudo', $pseudo);
-            $recupNouvelEntree->bindValue(':email', $_POST['email']);
-            $recupNouvelEntree->execute();
+            $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
+           
+            [$recupNouvelEntree, $db] = $model->sinscrire($pass, $pseudo, $email);
         
             $id = $db->lastInsertId();
 

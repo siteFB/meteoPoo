@@ -4,10 +4,13 @@ session_start();
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+require_once('../../libraries/models/Ephemeride.php');
+
+$model = new Ephemeride();
 
 if (isset($_SESSION["user"]["statut"])){
 
-$result = showActu();
+$result = $model->showActu();
 
 $db = deco();
 

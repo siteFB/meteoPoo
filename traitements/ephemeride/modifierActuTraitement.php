@@ -5,6 +5,9 @@ require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+require_once('../../libraries/models/Ephemeride.php');
+
+$model = new Ephemeride();
 
 sess("Admin", "../../");
 
@@ -15,8 +18,6 @@ if ($_POST) {
         && isset($_POST['titre']) && !empty($_POST['titre'])
         && isset($_POST['topo']) && !empty($_POST['topo'])
     ) {
-        
-        $db = getPdo();
 
         $id = strip_tags($_POST['idEphemeride']);
         $titre = strip_tags($_POST['titre']);
@@ -27,7 +28,7 @@ if ($_POST) {
         $size = $_FILES['imgTemps']['size'];
         $error = $_FILES['imgTemps']['error'];
     
-        modifierActu($id, $image, $titre, $topo);
+        $model->modifier($id, $image, $titre, $topo);
 
 // Upload de l'image et vérifier chaque clé: name, type, fichier temp, error et taille
 if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
@@ -110,7 +111,8 @@ if ($moveIsOk) {
 
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
     $id = strip_tags(stripslashes(htmlentities(trim($_GET['idEphemeride']))));
-    $produit = showOneActu($id);
+   
+    $produit = $model->showOne($id);
 
     if (!$produit) {
         info("erreur", "Cette éphéméride n'existe pas");

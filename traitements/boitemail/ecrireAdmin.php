@@ -5,6 +5,9 @@ require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+require_once('../../libraries/models/Messagerie.php');
+
+$model = new Message();
 
 sess("Admin", "../../");
 
@@ -22,7 +25,7 @@ if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
             $mesage = htmlspecialchars($_POST['mesage']);
 
             // Récupérer le pseudo du destinataire
-            $id_destinataire = pseudoDest($destinataire);
+            $id_destinataire = $model->pseudoDest($destinataire);
 
             // Protéger l'injection d'un id inexistant dans l'URL
             $dest_exist = $id_destinataire->rowCount();
@@ -32,7 +35,7 @@ if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
                 $id_destinataire = $id_destinataire['idUser'];
 
                 // Stocker le message dans la BDD
-                sendMess($id_destinataire, $titreMessage, $mesage);
+                $model->send($id_destinataire, $titreMessage, $mesage);
 
                 info("message", "Votre message a bien été envoyé");
                 $db = deco();
