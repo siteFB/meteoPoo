@@ -14,7 +14,7 @@ sess("Admin", "../../");
 if (isset($_GET['idUser']) && !empty($_GET['idUser'])) {
     $id = strip_tags($_GET['idUser']);
 
-    $resultat = $model->oneMess($id);
+    $resultat = $model->showOne($id);
 
     if (!$resultat) {
         info("erreur", "Cet id n'existe pas");
