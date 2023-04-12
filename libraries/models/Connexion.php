@@ -9,7 +9,10 @@ class Connexion extends Model{
  */
 public function seconnecter()
 {
-    $connexionCompte = $this->db->prepare("SELECT * FROM `users` WHERE `email`= :email");
+    $connexionCompte = $this->db->prepare("SELECT *
+                                           FROM `users`
+                                           WHERE `email`= :email
+                                           ");
     $connexionCompte->bindValue(':email', $_POST['email']);
     $connexionCompte->execute();
     $user = $connexionCompte->fetch();
