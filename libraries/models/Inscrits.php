@@ -7,7 +7,7 @@ class Inscrits{
 /**
  * Return la liste des inscrits: visible pour l'admin (read only, here)
  */
-function see()
+public function see()
 {
     $db = getPdo();
     $sql = 'SELECT * FROM `users`';

@@ -41,6 +41,7 @@ if ($_POST) {
         
     } else {
         info("erreur", "Le formulaire est incomplet");
+        redirect("/templates/ephemerideTemplate/addActu.php");
     }
 }
 ?>
