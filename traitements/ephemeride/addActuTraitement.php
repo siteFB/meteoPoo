@@ -5,6 +5,9 @@ require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+require_once('../../libraries/models/Ephemeride.php');
+
+$model = new Ephemeride();
 
 sess("Admin", "../../");
 
@@ -23,7 +26,7 @@ if ($_POST) {
         $destination = "../../images/" . $image;
         move_uploaded_file($tmp_name, $destination);
 
-        addEphemeride($imgTemps, $titre, $topo);
+        $model->add($imgTemps, $titre, $topo);
 
         $_SESSION["ephemeride"] = [
             "id" => strip_tags(stripslashes(htmlentities(trim($ephemeride["idEphemeride"])))),

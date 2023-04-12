@@ -42,24 +42,16 @@ include "../../templates/espaces/bienvenu.php";
                             <table class="table">
                                 <tbody>
                                     <?php
-                                    if ($msg_nbr == 0) {
-                                        $_SESSION['message'] = "Vous n'avez aucun message";
-                                    }
-
                                     while ($m = $msg->fetch()) {
-                                        $p_exp = $db->prepare('SELECT pseudo FROM users WHERE idUser= ?');
-                                        $p_exp->execute(array($m['id_expediteur']));
-                                        $p_exp = $p_exp->fetch();
-                                        $p_exp = $p_exp['pseudo'];
                                     ?>
                                         <tr>
-                                            <td class="fs-5"><?php echo "$p_exp"; ?></td>
-                                            <td><a class="fs-5" href="/templates/boitemailTemplate/msgDetailsMembre.php?idUser=<?php echo $m['id_expediteur']; ?>"><?php echo $m['titreMessage']; ?></a></td>
+                                            <th class="fs-5"><?php echo $m['pseudo']; ?></th>
+                                            <td><a class="fs-5" href=" msgDetailsMembre.php?idUser=<?php echo $m['id_expediteur']; ?>"><?php echo $m['titreMessage']; ?></a></td>
                                             <td class="time"><?php echo $m['dateMess']; ?></td>
                                             <td><a class="fs-5 text-secondary" onclick="return confirm('Voulez-vous supprimer ce message?')" href="/traitements/boitemail/supprMessMembre.php?idUser=<?php echo $m['idMessagerie']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                                         </tr>
-                                    <?php
-                                    }
+                                    <?php 
+                                    } 
                                     ?>
                                 </tbody>
                             </table>

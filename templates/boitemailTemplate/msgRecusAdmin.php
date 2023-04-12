@@ -42,7 +42,6 @@ include "../../templates/espaces/bienvenu.php";
                         <div class="table-responsive">
                             <table class="table">
                                 <tbody>
-                                <tbody>
                                     <?php
                                     while ($m = $msg->fetch()) {
                                     ?>

@@ -2,6 +2,9 @@
 session_start();
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+require_once('../../libraries/models/Connexion.php');
+
+$model = new Connexion();
 
 // Protect validation with button
 if (isset($_POST['btnConnexion'])) {
@@ -11,12 +14,9 @@ if (isset($_POST) && !empty($_POST)) {
         isset($_POST["email"], $_POST["pass"])
         && !empty($_POST["email"] && !empty($_POST["pass"]))
     ) {      
-        $db = getPdo(); 
 
-        $connexionCompte = $db->prepare("SELECT * FROM `users` WHERE `email`= :email");
-        $connexionCompte->bindValue(':email', $_POST['email']);
-        $connexionCompte->execute();
-        $user = $connexionCompte->fetch();
+        $user = $model->seconnecter();
+
 
         if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
             info("erreur", "Cet utilisateur et/ou le mot de passe est incorrect");  // Blur messages
