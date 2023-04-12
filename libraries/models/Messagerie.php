@@ -1,17 +1,15 @@
 <?php
 
-require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/models/model.php');
 
-class Message{
-
+class Message extends Model{
 
 /** 
  * Récupérer le pseudo et l'id du destinataire du message
  */
 public function pseudoDest(string $destinataire)
 {
-    $db = getPdo();
-            $id_destinataire = $db->prepare('SELECT idUser FROM users WHERE pseudo = :destinataire');
+            $id_destinataire = $this->db->prepare('SELECT idUser FROM users WHERE pseudo = :destinataire');
             $id_destinataire->bindValue(':destinataire', $destinataire, PDO::PARAM_STR);
             $id_destinataire->execute();
 
@@ -23,9 +21,9 @@ public function pseudoDest(string $destinataire)
  */
 public function send(int $id_destinataire, string $titreMessage, string $mesage)
 {
-    $db = getPdo();
-    $ins = $db->prepare('INSERT INTO messagerie(id_expediteur, id_destinataire, titreMessage, mesage)
-    VALUES (:id_expediteur, :id_destinataire, :titreMessage, :mesage)');
+    $ins = $this->db->prepare('INSERT INTO messagerie(id_expediteur, id_destinataire, titreMessage, mesage)
+                               VALUES (:id_expediteur, :id_destinataire, :titreMessage, :mesage)
+                               ');
 
 $ins->bindValue(':id_expediteur', $_SESSION['user']['id'], PDO::PARAM_INT);
 $ins->bindValue(':id_destinataire', $id_destinataire, PDO::PARAM_INT);
@@ -39,8 +37,7 @@ $ins->execute();
  */
 public function readAll(int $id_destinataire)
 {
-    $db = getPdo();
-    $msg = $db->prepare("SELECT  pseudo, idMessagerie, id_expediteur, titreMessage, dateMess 
+    $msg = $this->db->prepare("SELECT  pseudo, idMessagerie, id_expediteur, titreMessage, dateMess 
                          FROM `messagerie`
                          LEFT JOIN users
                          ON users.idUser = messagerie.id_expediteur
@@ -61,8 +58,7 @@ return [$msg, $msg_nbr];
  */
 public function oneMess(int $id)
 {
-    $db = getPdo();
-    $requete = $db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
+    $requete = $this->db->prepare('SELECT * FROM messagerie WHERE idMessagerie = :id; ');
     $requete->bindValue(':id', $id, PDO::PARAM_INT);
     $requete->execute();
     $resultat = $requete->fetch();
@@ -75,8 +71,7 @@ public function oneMess(int $id)
  */
 public function readOnlyOne(int $id, int $id_destinataire)
 {
-    $db = getPdo();
-    $msg = $db->prepare('SELECT pseudo, titreMessage, idMessagerie, mesage, dateMess
+    $msg = $this->db->prepare('SELECT pseudo, titreMessage, idMessagerie, mesage, dateMess
                          FROM messagerie
                          LEFT JOIN users
                          ON users.idUser = messagerie.id_expediteur
@@ -98,13 +93,9 @@ public function readOnlyOne(int $id, int $id_destinataire)
  */
 public function delete(int $id)
 {
-    $db = getPdo();
     $sql = 'DELETE FROM messagerie WHERE idMessagerie = :id;';
-    $requete = $db->prepare($sql);
+    $requete = $this->db->prepare($sql);
     $requete->bindValue(':id', $id, PDO::PARAM_INT);
     $requete->execute();   
 }
-
-
-
 }

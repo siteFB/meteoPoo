@@ -4,9 +4,7 @@ require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 require_once('../../libraries/models/Inscription.php');
 
-$model = new Inscription();
-
-if (isset($_POST) && !empty($_POST)){        
+if (isset($_POST) && !empty($_POST)){
         if(
             isset($_POST["pseudo"]) && !empty($_POST["pseudo"]) 
             && isset($_POST["email"]) && !empty($_POST["email"])           
@@ -25,7 +23,7 @@ if (isset($_POST) && !empty($_POST)){
 
             $pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
            
-            [$recupNouvelEntree, $db] = $model->sinscrire($pass, $pseudo, $email);
+            [$recupNouvelEntree, $db] = sinscrire($pass, $pseudo, $email);
         
             $id = $db->lastInsertId();
 

@@ -1,16 +1,15 @@
 <?php
 
-require_once('../../libraries/base/connexionBDD.php');
+require_once('../../libraries/models/model.php');
 
-class Connexion{
+class Connexion extends Model{
 
 /**
  * Connexion
  */
 public function seconnecter()
 {
-    $db = getPdo();
-    $connexionCompte = $db->prepare("SELECT * FROM `users` WHERE `email`= :email");
+    $connexionCompte = $this->db->prepare("SELECT * FROM `users` WHERE `email`= :email");
     $connexionCompte->bindValue(':email', $_POST['email']);
     $connexionCompte->execute();
     $user = $connexionCompte->fetch();

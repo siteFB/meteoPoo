@@ -1,17 +1,16 @@
 <?php
 
-require_once('libraries/base/connexionBDD.php');
+require_once('../../libraries/models/model.php');
 
-class Ephemeride{
+class Ephemeride extends Model{
 
 /**
  * Return CRUD éphéméride: create
  */
 public function add(string $imgTemps, string $titre, string $topo)
 {
-    $db = getPdo();
     $sql = 'INSERT INTO `ephemeride`(`imgTemps`, `titre`, `topo`) VALUES (:imgTemps, :titre, :topo);';
-    $query = $db->prepare($sql);
+    $query = $this->db->prepare($sql);
     $query->bindValue(':imgTemps', $imgTemps, PDO::PARAM_STR);
     $query->bindValue(':titre', $titre, PDO::PARAM_STR);
     $query->bindValue(':topo', $topo, PDO::PARAM_STR);
@@ -24,9 +23,8 @@ public function add(string $imgTemps, string $titre, string $topo)
  */
 public function showActu()
 {
-    $db = getPdo();
     $sql = 'SELECT * FROM `ephemeride`';
-    $query = $db->prepare($sql);
+    $query = $this->db->prepare($sql);
     $query->execute();
     $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -38,9 +36,8 @@ public function showActu()
  */
 public function showOne(int $id)
 {
-    $db = getPdo();
     $sql = 'SELECT * FROM `Ephemeride` WHERE `idEphemeride` = :id;';
-    $query = $db->prepare($sql);
+    $query = $this->db->prepare($sql);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
     $produit = $query->fetch();
@@ -53,9 +50,8 @@ public function showOne(int $id)
  */
 public function modifier(int $id, string $image, string $titre, string $topo)
 {
-    $db = getPdo();
     $sql = 'UPDATE `ephemeride` SET `imgTemps`=:imgTemps, `titre`=:titre, `topo`=:topo WHERE `idEphemeride`=:id;';
-    $query = $db->prepare($sql);
+    $query = $this->db->prepare($sql);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->bindValue(':imgTemps', $image, PDO::PARAM_STR);
     $query->bindValue(':titre', $titre, PDO::PARAM_STR);
@@ -69,9 +65,8 @@ public function modifier(int $id, string $image, string $titre, string $topo)
  */
 public function delete(int $id): void
 {
-    $db = getPdo();
     $sql = 'DELETE FROM `Ephemeride` WHERE `idEphemeride` = :id;';
-    $query = $db->prepare($sql);
+    $query = $this->db->prepare($sql);
     $query->bindValue(':id', $id, PDO::PARAM_INT);
     $query->execute();
 }
