@@ -10,7 +10,7 @@ $model = new Ephemeride();
 
 if (isset($_SESSION["user"]["statut"])){
 
-$result = $model->showActu();
+$result = $model->findAll();
 
 $db = deco();
 

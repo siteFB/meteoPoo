@@ -3,6 +3,8 @@ session_start();
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 require_once('../../libraries/models/Connexion.php');
+require_once('../../libraries/models/Model.php');
+
 
 $model = new Connexion();
 
@@ -15,7 +17,7 @@ if (isset($_POST) && !empty($_POST)) {
         && !empty($_POST["email"] && !empty($_POST["pass"]))
     ) {      
 
-        $user = $model->seconnecter();
+        $user = $model->findAll("email = :email");
 
 
         if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
@@ -65,7 +67,7 @@ if (isset($_POST) && !empty($_POST)) {
     }
 
 // Bouton obligatoire
-}else{
+}/*else{
     redirect("../../templates/formConnexion.php");
-}
+}*/
 ?>

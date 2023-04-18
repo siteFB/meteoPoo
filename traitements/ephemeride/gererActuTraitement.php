@@ -10,6 +10,6 @@ $model = new Ephemeride();
 
 sess("Admin", "../../");
 
-$result = $model->showActu();
+$result = $model->findAll();
 $db = deco(); 
 ?>
