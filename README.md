@@ -9,6 +9,6 @@ Finally we create the methods necessary for the behavior of the class.<br>
 For instantiations, we use the "new" keyword to create a new object of the class. All that remains is to call the method of the expected behavior of the object.<br>
 
 # $\text{\color{blue}{ \ NOW \ PRACTICE !}}$<br>
-$\text{\color{blue}{ \ . Ok, I have to reorganize ALL my code to prepare it well for factorization with functions... Laborious work because of many redirects... 💦<br> }}$
-$\text{\color{blue}{ \ . Same with query factorization! 💦 💦 <br> }}$
-$\text{\color{blue}{ \ . Next: models and class inherit }}$
+ . Ok, I have to reorganize ALL my code to prepare it well for factorization with functions... Laborious work because of many redirects... 💦<br>
+ . Same with query factorization! 💦 💦 <br>
+ . Next: models and class inherit
