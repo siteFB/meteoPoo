@@ -10,4 +10,5 @@ For instantiations, we use the "new" keyword to create a new object of the class
 
 # $\text{\color{blue}{ \ NOW \ PRACTICE !}}$<br>
 $\text{\color{blue}{ .}}$ Ok, I have to reorganize ALL my code to prepare it well for factorization with functions... Laborious work because of many redirects... 💦<br>
-$\text{\color{blue}{ .}}$ Same with query factorization! 💦 💦
+$\text{\color{blue}{ .}}$ Same with query factorization! 💦 💦 <br>
+$\text{\color{blue}{ .}}$ next: models and class inheritance
