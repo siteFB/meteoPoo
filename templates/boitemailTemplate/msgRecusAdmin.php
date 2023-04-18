@@ -1,6 +1,7 @@
 <?php
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/utils/utils.php');
+
 include "../../traitements/boitemail/recusAdmin.php";
 ?>
 
@@ -40,21 +41,22 @@ include "../../templates/espaces/bienvenu.php";
                         };
                         ?>
                         <div class="table-responsive">
-                            <table class="table">
-                                <tbody>
-                                    <?php
+                        <?php
                                     while ($m = $msg->fetch()) {
                                     ?>
+                            <table class="table">
+                                <tbody> 
                                         <tr>
                                             <th class="fs-5"><?php echo $m['pseudo']; ?></th>
                                             <td><a class="fs-5" href=" msgDetailsAdmin.php?idUser=<?php echo $m['id_expediteur']; ?>"><?php echo $m['titreMessage']; ?></a></td>
                                             <td class="time"><?php echo $m['dateMess']; ?></td>
                                             <td><a class="fs-5 text-secondary" onclick="return confirm('Voulez-vous supprimer ce message?')" href="/traitements/boitemail/supprMessAdmin.php?idUser=<?php echo $m['idMessagerie']; ?>"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+
                                         </tr>
-                                    <?php 
+                                </tbody>
+                                <?php 
                                     } 
                                     ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
