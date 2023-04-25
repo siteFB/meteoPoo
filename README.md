@@ -23,4 +23,4 @@ the autoload is magic but I still have to adapt it to my beginner site,<br>
 to summarize I would say that everything is a story of ... class! :bowtie: <br>
 
 I need to take some distance. I will come back when I have matured because I always achieve my goals <br>
-I'm starting in Symfony !! <br>
+I'm starting in Symfony !! :violin: <br>
