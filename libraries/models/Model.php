@@ -1,8 +1,10 @@
 <?php
 
+namespace Models;
+
 require_once('../../libraries/base/connexionBDD.php');
 
-class Model
+abstract class Model
 {
     protected $db;
     protected $table;
@@ -24,7 +26,7 @@ class Model
         $query = $this->db->prepare("DELETE FROM {$this->table}
                                  WHERE {$this->chooseId} = :id;
                                  ");
-        $query->bindValue(':id', $id, PDO::PARAM_INT);
+        $query->bindValue(':id', $id);
         $query->execute();
     }
 
@@ -37,7 +39,7 @@ class Model
                                    FROM {$this->table}
                                    WHERE {$this->chooseId} = :id;
                                    ");
-        $requete->bindValue(':id', $id, PDO::PARAM_INT);
+        $requete->bindValue(':id', $id);
         $requete->execute();
         $item = $requete->fetch();
 
@@ -45,7 +47,7 @@ class Model
     }
 
     /**
-     * Afficher toutes les colonnes d'une table
+     * Afficher tout
      */
     public function findAll(?string $where = "")
     {

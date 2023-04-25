@@ -6,7 +6,7 @@ require_once('../../libraries/models/Connexion.php');
 require_once('../../libraries/models/Model.php');
 
 
-$model = new Connexion();
+$model = new \Models\Connexion();
 
 // Protect validation with button
 if (isset($_POST['btnConnexion'])) {

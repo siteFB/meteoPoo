@@ -1,6 +1,6 @@
 <?php
 require_once('../../libraries/utils/utils.php');
-include "../../traitements/ephemeride/detailsEphemerideTraitement.php";
+include "../../traitements/ephemerideConsulter/detailsEphemerideTraitement.php";
 ?>
 
 <?php

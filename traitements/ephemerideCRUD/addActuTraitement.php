@@ -1,13 +1,17 @@
-<?php
+<?php    // Gestion réservée à l'admin: ajouter
 session_start();
 
+$controllerCRUD = new \Controllers\EphemerideCRUD();
+$controllerCRUD->add();
+
+/*
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 require_once('../../libraries/models/Ephemeride.php');
 
-$model = new Ephemeride();
+$model = new \Models\Ephemeride();
 
 sess("Admin", "../../");
 
@@ -44,4 +48,5 @@ if ($_POST) {
         redirect("/templates/ephemerideTemplate/addActu.php");
     }
 }
+*/
 ?>

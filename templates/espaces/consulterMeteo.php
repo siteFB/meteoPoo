@@ -1,6 +1,6 @@
 <?php
 require_once('../../libraries/utils/utils.php');
-include "../../traitements/ephemeride/consulterMeteoTraitement.php";
+include "../../traitements/ephemerideConsulter/lireMeteoTraitement.php";
 ?>
 
 <?php

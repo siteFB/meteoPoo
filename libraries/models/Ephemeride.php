@@ -1,6 +1,8 @@
 <?php
 
-require_once('../../libraries/models/model.php');
+namespace Models;
+
+require_once('../../libraries/models/Model.php');
 
 class Ephemeride extends Model
 {
@@ -19,9 +21,9 @@ class Ephemeride extends Model
         $sql = 'INSERT INTO `ephemeride`(`imgTemps`, `titre`, `topo`)
             VALUES (:imgTemps, :titre, :topo);';
         $query = $this->db->prepare($sql);
-        $query->bindValue(':imgTemps', $imgTemps, PDO::PARAM_STR);
-        $query->bindValue(':titre', $titre, PDO::PARAM_STR);
-        $query->bindValue(':topo', $topo, PDO::PARAM_STR);
+        $query->bindValue(':imgTemps', $imgTemps);
+        $query->bindValue(':titre', $titre);
+        $query->bindValue(':topo', $topo);
 
         $query->execute();
     }
@@ -35,11 +37,30 @@ class Ephemeride extends Model
             SET `imgTemps`=:imgTemps, `titre`=:titre, `topo`=:topo
             WHERE `idEphemeride`=:id;';
         $query = $this->db->prepare($sql);
-        $query->bindValue(':id', $id, PDO::PARAM_INT);
-        $query->bindValue(':imgTemps', $image, PDO::PARAM_STR);
-        $query->bindValue(':titre', $titre, PDO::PARAM_STR);
-        $query->bindValue(':topo', $topo, PDO::PARAM_STR);
+        $query->bindValue(':id', $id);
+        $query->bindValue(':imgTemps', $image);
+        $query->bindValue(':titre', $titre);
+        $query->bindValue(':topo', $topo);
 
         $query->execute();
     }
+
+    /**
+     * Return CRUD éphéméride: read all
+     */
+    public function afficherTout()
+    {
+        require_once('../../libraries/base/connexionBDD.php');
+        $sql = 'SELECT * FROM `ephemeride`';
+
+        $query = $this->db->prepare($sql);
+        
+        $query->execute();
+        
+        $result = $query->fetchAll($this->db::FETCH_ASSOC);
+
+        return $result; 
+    }
+
+
 }
