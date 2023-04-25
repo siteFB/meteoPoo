@@ -20,4 +20,4 @@ That's good, I love challenges!!<br>
 The most difficult thing for me is to understand how to recover the data extracted outside the class...<br>
 The namespaces seem practical,<br>
 the autoload is magic but I still have to adapt it to my beginner site,<br>
-to summarize I would say that everything is a story of ... class! :bowtie <br>
+to summarize I would say that everything is a story of ... class! :bowtie: <br>
