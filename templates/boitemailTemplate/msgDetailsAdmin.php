@@ -1,6 +1,7 @@
 <?php
 require_once('../../libraries/utils/utils.php');
-include "../../traitements/boitemail/detailsAdmin.php";
+require_once('../../libraries/controllers/Mailer.php');
+require_once('../../traitements/boitemail/detailsAdmin.php');
 ?>
 
 <?php

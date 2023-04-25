@@ -1,13 +1,18 @@
 <?php
-session_start();
 
+require_once('../../libraries/controllers/Mailer.php');
+
+$controllerCRUD = new \Controllers\MailerAdmin();
+$controllerCRUD->write();
+
+/*
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/base/deconnexionBDD.php');
 require_once('../../libraries/utils/utils.php');
 require_once('../../libraries/models/Messagerie.php');
 
-$model = new Message();
+$model = new \Models\Message();
 
 sess("Admin", "../../");
 
@@ -49,4 +54,5 @@ if (isset($_SESSION['user']['id']) and !empty($_SESSION['user']['id'])) {
         }
     }
 }
+*/
 ?>

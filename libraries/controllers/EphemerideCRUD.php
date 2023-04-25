@@ -1,13 +1,73 @@
 <?php
-session_start();
+
+namespace Controllers;
 
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
+require_once('../../libraries/controllers/ControllerEphemeride.php');
 require_once('../../libraries/base/deconnexionBDD.php');
-require_once('../../libraries/utils/utils.php');
 require_once('../../libraries/models/Ephemeride.php');
+require_once('../../libraries/utils/utils.php');
 
-$model = new Ephemeride();
+class EphemerideCRUD extends ControllerEphemeride{
+
+    protected $modelName = \Models\Ephemeride::class;
+
+
+//Gestion de la météo: accueil admin
+public function accueilMeteoAdmin(array $result =[]){
+    
+    sess("Admin", "../../");
+
+    extract($result);
+    $result = $this->model->afficherTout();
+
+    $db = deco();
+    }
+
+//Créer une éphéméride
+public function add(array $ephemeride =[]){
+    
+    sess("Admin", "../../");
+    
+    if ($_POST) {
+        if (isset($_POST['imgTemps']) && !empty($_POST['imgTemps'])
+            && isset($_POST['titre']) && !empty($_POST['titre'])
+            && isset($_POST['topo']) && !empty($_POST['topo'])
+        ) {
+    
+            $imgTemps = strip_tags(stripslashes(htmlentities(trim($_POST['imgTemps']))));
+            $titre = strip_tags(stripslashes(htmlentities(trim($_POST['titre']))));
+            $topo = strip_tags(stripslashes(htmlentities(trim($_POST['topo']))));
+    
+            $image = $_FILES['imgTemps']['name'];
+            $tmp_name = $_FILES['imgTemps']['tmp_name'];
+            $destination = "../../images/" . $image;
+            move_uploaded_file($tmp_name, $destination);
+    
+            $this->model->add($imgTemps, $titre, $topo);
+    
+            $_SESSION["ephemeride"] = [
+                "id" => strip_tags(stripslashes(htmlentities(trim($ephemeride["idEphemeride"])))),
+                "imgTemps" => strip_tags(stripslashes(htmlentities(trim($ephemeride["imgTemps"])))),
+                "titre" => strip_tags(stripslashes(htmlentities(trim($ephemeride["titre"])))),
+                "topo" => strip_tags(stripslashes(htmlentities(trim($ephemeride["topo"]))))
+            ];
+    
+            info("message", "L'éphéméride' est ajoutée");
+            $db = deco(); 
+            redirect("/templates/ephemerideTemplate/gererActu.php");
+            
+        } else {
+            info("erreur", "Le formulaire est incomplet");
+            redirect("/templates/ephemerideTemplate/addActu.php");
+        }
+    }
+        }
+
+
+//Modifier une éphéméride
+public function modifier(){
 
 sess("Admin", "../../");
 
@@ -28,7 +88,7 @@ if ($_POST) {
         $size = $_FILES['imgTemps']['size'];
         $error = $_FILES['imgTemps']['error'];
     
-        $model->modifier($id, $image, $titre, $topo);
+        $this->model->modifier($id, $image, $titre, $topo);
 
 // Upload de l'image et vérifier chaque clé: name, type, fichier temp, error et taille
 if (isset($_FILES['imgTemps']) &&  !empty($_FILES['imgTemps']['tmp_name'])) {
@@ -112,7 +172,7 @@ if ($moveIsOk) {
 if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
     $id = strip_tags(stripslashes(htmlentities(trim($_GET['idEphemeride']))));
    
-    $produit = $model->showOne($id);
+    $produit = $this->model->showOne($id);
 
     if (!$produit) {
         info("erreur", "Cette éphéméride n'existe pas");
@@ -122,3 +182,37 @@ if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])) {
 } else {
     redirect("/templates/ephemerideTemplate/gererActu.php");
 }
+    }
+
+//Supprimer une éphéméride   
+public function delete(){
+    
+    sess("Admin", "../../");
+    
+    if(isset($_GET['idEphemeride']) && !empty($_GET['idEphemeride'])){
+    
+        $id = strip_tags(stripslashes(htmlentities(trim($_GET['idEphemeride']))));
+    
+        $produit = $this->model->showOne($id);
+    
+        if(!$produit){
+            info("erreur", "Cet id n'existe pas");
+            redirect("../../templates/ephemerideTemplate/gererActu.php");
+        }
+    
+        $this->model->delete($id);
+    
+        info("erreur", "Éphéméride supprimée");
+        redirect("../../templates/ephemerideTemplate/gererActu.php");
+    
+    }else{
+        info("erreur", "URL invalide");
+        redirect("../../templates/ephemerideTemplate/gererActu.php");
+    }
+}
+}
+?>
+
+
+
+

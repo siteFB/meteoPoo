@@ -19,7 +19,7 @@
                     </div>
                 </div>
             <?php
-            endforeach
+            endforeach;
             ?>
         </div>
     </div>

@@ -1,6 +1,8 @@
 <?php
+
+require_once('libraries/autoload.php');
 require_once('libraries/utils/utils.php');
-include "traitements/ephemeride/ephemerideActusTraitement.php";
+include "traitements/ephemerideConsulter/ephemerideActusTraitement.php";
 ?>
 <?php
 $titre = "Accueil";

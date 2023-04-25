@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 require_once('../libraries/base/connexionBDD.php');
 
 class Inscrits
@@ -14,7 +16,7 @@ class Inscrits
         $sql = 'SELECT * FROM `users`';
         $query = $db->prepare($sql);
         $query->execute();
-        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll();
 
         return $result;
     }

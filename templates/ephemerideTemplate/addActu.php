@@ -1,6 +1,6 @@
 <?php
 require_once('../../libraries/utils/utils.php');
-include "../../traitements/ephemeride/addActuTraitement.php";
+include "../../traitements/ephemerideCRUD/addActuTraitement.php";
 ?>
 
 <?php
@@ -24,7 +24,7 @@ include "../espaces/bienvenu.php";
                 } elseif (colorMess("message", "success")) {
                 };
                 ?>
-                <form action="/traitements/ephemeride/addActuTraitement.php" method="post">
+                <form action="/traitements/ephemerideCRUD/addActuTraitement.php" method="post">
                     <div class="form-group">
                         <label for="imgTemps"></label>
                         <input type="file" id="imgTemps" name="imgTemps" class="form-control" placeholder="image" value="<?php echo strip_tags(stripslashes(htmlentities(trim($ephemeride['imgTemps'])))) ?>">

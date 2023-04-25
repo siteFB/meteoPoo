@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 require_once('../../libraries/models/model.php');
 
 class Message extends Model
@@ -18,7 +20,7 @@ class Message extends Model
                                                    FROM users
                                                    WHERE pseudo = :destinataire
                                                    ');
-        $id_destinataire->bindValue(':destinataire', $destinataire, PDO::PARAM_STR);
+        $id_destinataire->bindValue(':destinataire', $destinataire);
         $id_destinataire->execute();
 
         return $id_destinataire;
@@ -33,10 +35,10 @@ class Message extends Model
                                VALUES (:id_expediteur, :id_destinataire, :titreMessage, :mesage)
                                ');
 
-        $ins->bindValue(':id_expediteur', $_SESSION['user']['id'], PDO::PARAM_INT);
-        $ins->bindValue(':id_destinataire', $id_destinataire, PDO::PARAM_INT);
-        $ins->bindValue(':titreMessage', $titreMessage, PDO::PARAM_STR);
-        $ins->bindValue(':mesage', $mesage, PDO::PARAM_STR);
+        $ins->bindValue(':id_expediteur', $_SESSION['user']['id']);
+        $ins->bindValue(':id_destinataire', $id_destinataire);
+        $ins->bindValue(':titreMessage', $titreMessage);
+        $ins->bindValue(':mesage', $mesage);
         $ins->execute();
     }
 
@@ -53,7 +55,7 @@ class Message extends Model
                          ORDER BY dateMess
                          DESC;
                      ");
-        $msg->bindValue(':id_destinataire', $id_destinataire, PDO::PARAM_INT);
+        $msg->bindValue(':id_destinataire', $id_destinataire);
         $msg->execute();
         $msg->fetch();
         $msg_nbr = $msg->rowCount();
@@ -75,11 +77,11 @@ class Message extends Model
                          ORDER BY dateMess
                          DESC
                          ');
-        $msg->bindValue(':idUser', $id, PDO::PARAM_INT);
-        $msg->bindValue(':id_destinataire', $id_destinataire, PDO::PARAM_INT);
+        $msg->bindValue(':idUser', $id);
+        $msg->bindValue(':id_destinataire', $id_destinataire);
         $msg->execute();
         $msg_nbr = $msg->rowCount();
-        $resultat = $msg->fetchAll(PDO::FETCH_ASSOC);
+        $resultat = $msg->fetchAll();
 
         return [$msg_nbr, $resultat];
     }

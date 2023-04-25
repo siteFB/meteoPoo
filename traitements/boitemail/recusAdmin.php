@@ -1,11 +1,16 @@
 <?php
-session_start();
 
+require_once('../../libraries/controllers/MailerAdmin.php');
+
+$controller = new \Controllers\MailerAdmin();
+$controller->receive();
+
+/*
 require_once('../../libraries/base/connexionBDD.php');
 require_once('../../libraries/sessions/sessionChoice.php');
 require_once('../../libraries/models/Messagerie.php');
 
-$model = new Message();
+$model = new \Models\Message();
 
 sess("Admin", "../../");
 
@@ -19,5 +24,6 @@ if ($msg_nbr == 0) {
     $_SESSION['message'] = "Vous n'avez aucun message";
 }
 }
+*/
 ?>
 

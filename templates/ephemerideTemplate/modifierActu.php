@@ -1,6 +1,6 @@
 <?php
 require_once('../../libraries/utils/utils.php');
-include "../../traitements/ephemeride/modifierActuTraitement.php";
+include "../../traitements/ephemerideCRUD/modifierActuTraitement.php";
 ?>
 <?php
 $titre = "Espace administrateur/Gérer l'actualité";

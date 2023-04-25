@@ -1,6 +1,8 @@
 <?php
 
-require_once('../../libraries/models/model.php');
+namespace Models;
+
+require_once('../../libraries/models/Model.php');
 
 class Connexion extends Model{
 

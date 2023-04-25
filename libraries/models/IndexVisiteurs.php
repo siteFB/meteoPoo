@@ -4,6 +4,7 @@ require_once('libraries/base/connexionBDD.php');
 
 /**
  * Afficher toutes les éphémérides: read
+ *   réservé uniquement aux visiteurs
  */
 function showActu()
 {
@@ -11,7 +12,7 @@ function showActu()
     $sql = 'SELECT * FROM `ephemeride`';
     $query = $db->prepare($sql);
     $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    $result = $query->fetchAll();
 
     return $result;
 }
